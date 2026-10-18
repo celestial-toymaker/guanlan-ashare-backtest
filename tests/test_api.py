@@ -20,7 +20,9 @@ def test_saved_run_ui_cli_tables_and_trade_explanation(market):
     assert detail['trade']['notional']==trade['notional']
     assert detail['order'][0]['order_id']==trade['order_id']
     assert sum(float(r['amount']) for r in detail['journal'])==0
-    assert client.get('/api/runs/api-example/file/report.html').status_code==200
+    report=client.get('/api/runs/api-example/file/report.md')
+    assert report.status_code==200 and '# ' in report.text and '事后规划' in report.text
+    assert client.get('/api/runs/api-example/file/equity-curve.svg').status_code==200
 
 
 def test_job_queue_persistence_cancel_and_local_origin(tmp_path):

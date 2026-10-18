@@ -8,7 +8,7 @@ import numpy as np
 
 from .ledger import Ledger, ZERO
 from .rules import FeeModel, candidate_limits, legal_quantity, quantity_rule, split_quantity, tick
-from .utils import dec, money
+from .utils import dec, dumps, money
 
 TRANSITIONS = {
     "submitted": {"accepted", "rejected"}, "accepted": {"partially_filled", "filled", "cancelled", "expired"},
@@ -146,9 +146,10 @@ class Broker:
             order.reserved_cash = ZERO
         if order.reserved_quantity:
             position = self.ledger.positions.get(order.security)
-            if position:
-                position.reserved = max(ZERO, position.reserved - order.reserved_quantity)
             order.reserved_quantity = ZERO
+            if position:
+                position.reserved = sum((pending.reserved_quantity for pending in self.orders
+                                         if pending.security == order.security), ZERO)
 
     def cancel(self, order_id, reason="撤销委托"):
         order = next((order for order in self.orders if order.order_id == order_id), None)
@@ -324,7 +325,7 @@ class Broker:
             position = self.ledger.positions.get(security)
             if position and position.quantity < 1 and position.sellable(day) == position.quantity:
                 context = self.opening_context(row, security)
-                dummy = type("Tail", (), {"side": "sell"})()
+                dummy = type("Tail", (), {"side": "sell", "security": security})()
                 if not self.block_reason(row, dummy, context):
                     quantity, price = position.quantity, context[1]
                     self.ledger.source_event = "proxy-tail:" + security
@@ -369,42 +370,42 @@ class Broker:
 
 
 class ExitPlanner:
-    def __init__(self, config, data, broker):
+    def __init__(self, config, data, broker, known_events=lambda: ()):
         self.config, self.data, self.broker = config, data, broker
         self.active = set()
         self.records = []
         self.started = {}
         self.completed = set()
+        from .exit_path import ActualExitPath
+        self.actual_path = ActualExitPath(broker, known_events)
 
     def estimate(self, security, quantity, row, newly_bought=False):
         column = self.data.index.get(security)
-        price = self.data.arrays["close"][row, column] if column is not None else float("nan")
         capacity = self.broker.capacity(row, column) if column is not None else ZERO
         remaining_sessions = sum(self.data.dates[index] <= self.config.end for index in range(row + 1, len(self.data.dates)))
-        if not np.isfinite(price) or price <= 0 or capacity <= 0:
-            per_open, sessions = 0, None
+        if self.config.exit_mode == 'latest_feasible':
+            from copy import deepcopy
+            from .ledger import Position
+            position = deepcopy(self.broker.ledger.positions.get(security, Position(security)))
+            position.quantity = dec(quantity)
+            if security not in self.broker.ledger.positions and column is not None:
+                factor = self.data.arrays['cumadj'][row, column]
+                position.factor = dec(factor) if np.isfinite(factor) and factor > 0 else Decimal(1)
+            path = self.actual_path.plan(security, position, row)
         else:
-            raw = int(capacity / dec(price))
-            whole = int(dec(quantity))
-            rule = self.broker.rule(security)
-            per_open = whole if raw >= whole else raw // rule.step * rule.step
-            if raw < whole and per_open < rule.minimum:
-                per_open = 0
-            sessions = math.ceil(float(dec(quantity) / per_open)) if per_open > 0 else None
-        required = sessions + int(newly_bought) if sessions is not None else None
-        latest = None
-        future = [day for day in self.data.dates[row + 1:] if day <= self.config.end]
-        if required is not None and 0 < required <= len(future):
-            latest = future[-required]
+            path = {'feasible': None, 'latest_start': None, 'required_sessions': None, 'fills': [], 'terminal_quantity': str(quantity)}
         return {"date": self.data.dates[row], "security": security, "quantity": str(quantity), "known_capacity": str(capacity),
-                "estimated_shares_per_open": per_open, "required_sessions": required,
-                "remaining_sessions": remaining_sessions, "estimated_latest_start": latest,
-                "basis": "决策时成交额、20 日平均成交额、收盘价、数量规则与 T+1；逐日更新估算"}
+                "required_sessions": path['required_sessions'], 'actual_latest_start': path['latest_start'],
+                "remaining_sessions": remaining_sessions, 'path_feasible': path['feasible'],
+                'projected_terminal_quantity': path['terminal_quantity'], 'capacity_path': dumps(path['fills']),
+                'uses_future_market_data': self.config.exit_mode == 'latest_feasible',
+                "basis": "退出模块专用后续行情；逐开盘重放实际价格、规则容量、封板、T+1 和数量规则；公告按当前可获知时间截断" if self.config.exit_mode == 'latest_feasible' else '末日按所选规则处理'}
 
     def update(self, ledger, row):
         for security, position in sorted(ledger.positions.items()):
             estimate = self.estimate(security, position.quantity, row)
-            due = estimate["required_sessions"] is None or estimate["required_sessions"] >= estimate["remaining_sessions"]
+            following = self.data.dates[row + 1] if row + 1 < len(self.data.dates) else None
+            due = estimate['path_feasible'] is False or (following and estimate['actual_latest_start'] and estimate['actual_latest_start'] <= following)
             if self.config.exit_mode == "latest_feasible" and due:
                 self.active.add(security)
             if row + 1 >= len(self.data.dates) or self.data.dates[row + 1] > self.config.end:
@@ -440,5 +441,4 @@ class ExitPlanner:
             return False
         if self.config.exit_mode != "latest_feasible":
             return row + 1 < len(self.data.dates) and self.data.dates[row + 1] < self.config.end
-        estimate = self.estimate(security, quantity, row, newly_bought=True)
-        return estimate["required_sessions"] is not None and estimate["required_sessions"] < estimate["remaining_sessions"]
+        return self.actual_path.prospective(security, quantity, row)

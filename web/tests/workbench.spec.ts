@@ -12,6 +12,11 @@ test('实际结果、选股、交易解释、退出与设置', async ({page}) =>
   await expect(page.getByRole('heading',{name:'让每一笔收益，都有来处。'})).toBeVisible();
   await expect(page.locator('.metric-value').first()).not.toContainText('10.00 亿');
   await expect(page.locator('.recharts-surface').first()).toBeVisible();
+  await expect(page.getByText('退出采用事后规划口径。',{exact:true})).toBeVisible();
+  await expect(page.getByRole('link',{name:'Markdown 报告'})).toHaveAttribute('href','/api/runs/full-momentum/file/report.md');
+  const report=await page.request.get('/api/runs/full-momentum/file/report.md');
+  expect(report.status()).toBe(200);
+  expect(await report.text()).toContain('后续行情使用范围');
   await page.mouse.move(0,0);
   await expect(page.locator('.period-strip .hint-bubble')).toBeHidden();
   await page.screenshot({path:`${shots}/desktop-overview.png`,fullPage:true});
@@ -28,7 +33,7 @@ test('实际结果、选股、交易解释、退出与设置', async ({page}) =>
   await page.screenshot({path:`${shots}/desktop-trade-detail.png`,fullPage:true});
   await page.getByLabel('关闭交易详情').click();
   await page.getByRole('button',{name:'退出计划',exact:true}).click();
-  await expect(page.getByRole('heading',{name:'逐证券退出估算'})).toBeVisible();
+  await expect(page.getByRole('heading',{name:'逐证券实际退出路径'})).toBeVisible();
   await page.screenshot({path:`${shots}/desktop-exits.png`,fullPage:true});
   await page.getByRole('button',{name:/策略实验室/}).click();
   await expect(page.locator('.strategy-card')).toHaveCount(10);

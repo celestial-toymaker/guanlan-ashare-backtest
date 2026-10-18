@@ -8,6 +8,7 @@ feathers/
 data_inspection/
 data/*
 !data/acceptance.json
+!data/actual-exit-check.json
 !data/full-acceptance.json
 !data/5dr-report-check.json
 !data/profile.json

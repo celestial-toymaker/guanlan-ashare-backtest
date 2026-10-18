@@ -81,7 +81,7 @@ def main():
     else:
         from .engine import run
         result = run(config,progress=progress,run_id=args.run_id)
-        print(f"报告：{result.run_dir / 'report.html'}")
+        print(f"报告：{result.run_dir / 'report.md'}")
         print(dumps({key:result.summary[key] for key in ("net_profit","return","max_drawdown","average_exposure","first_trade_date")},pretty=True))
 
 

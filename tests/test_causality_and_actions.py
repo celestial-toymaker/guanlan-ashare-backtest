@@ -71,10 +71,15 @@ def test_exit_modes_under_interrupted_quotes(market,mode):
         data.arrays[field][start+3:]=np.nan
     data.arrays['amt'][start+3:]=0
     features=compute_features(data,config,use_cache=False)
-    result=run(config,data=data,features=features,status=status,output=False)
+    result=run(config,data=data,features=features,status=status,run_id='interrupted-'+mode)
     if mode=='force_cash':
+        text=(result.run_dir/'report.md').read_text()
+        assert '终点假设清算明细' in text and '估值价格' in text
+    if mode in {'latest_feasible','force_cash'}:
         assert D(result.summary['ending_market_value'])==0
-        assert result.summary['terminal_assumptions']
+        assert bool(result.summary['terminal_assumptions']) == (mode == 'force_cash')
+        if mode == 'latest_feasible':
+            assert result.trades.date.max() < data.dates[start+3]
     else:
         assert D(result.summary['ending_market_value'])>0
         assert D(result.summary['stale_value'])>0

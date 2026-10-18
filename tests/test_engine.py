@@ -25,6 +25,7 @@ def test_ten_strategies_full_clock(market,strategy):
 
 def test_replay_and_future_market_stability(market):
     config,data,features,status = market
+    config.exit_mode = "strict_end"
     first = run(config,data=data,features=features,status=status,output=False)
     repeated = run(config,data=data,features=features,status=status,output=False)
     assert first.journal.to_json() == repeated.journal.to_json()
@@ -42,7 +43,9 @@ def test_exit_modes_and_reports(market,mode):
     config,data,features,status = market
     config.exit_mode = mode
     result = run(config,data=data,features=features,status=status,run_id=mode)
-    assert (result.run_dir / "report.html").exists()
+    assert (result.run_dir / "report.md").exists()
+    from xml.etree import ElementTree
+    assert ElementTree.parse(result.run_dir / "equity-curve.svg").getroot().tag == "{http://www.w3.org/2000/svg}svg"
     assert (result.run_dir / "manifest.json").exists()
     assert Decimal(result.summary["ending_market_value"]) == 0
 
@@ -82,6 +85,7 @@ def test_liquidity_threshold_refines_float32_boundary(market):
 def test_buy_hold_retries_until_first_actual_fill(market):
     config,data,features,status=market
     config.strategy='buy_hold';config.parameters={'symbol':'000001.SZ'}
+    config.exit_mode='strict_end'
     first=data.date_index[config.start]
     data.arrays['open'][first,0]=np.nan
     result=run(config,data=data,features=features,status=status,output=False)
@@ -97,6 +101,7 @@ def test_daily_selection_distinguishes_carried_intent_and_qualified_target(marke
     first=data.date_index[config.start]
     data.arrays['open'][first,0]=np.nan
     data.arrays['amt'][first,0]=0
+    config.exit_mode="strict_end"
     class OneDecision(Strategy):
         def __init__(self):self.called=False
         def on_close(self,history,portfolio):
@@ -108,3 +113,20 @@ def test_daily_selection_distinguishes_carried_intent_and_qualified_target(marke
     assert row.strategy_weight==.95 and row.target_weight==0
     assert not row.selected and not row.eligible
     assert '资格约束' in row.selection_reason
+
+
+def test_actual_exit_future_access_preserves_signal_boundary(market):
+    config,data,features,status=market
+    first=run(config,data=data,features=features,status=status,output=False,collect_selection=True)
+    cutoff=data.date_index['2025-01-15']
+    for field in ('open','high','low','close'):
+        data.arrays[field][cutoff:]*=1.25
+    data.arrays['amt'][cutoff:]*=.01
+    changed=compute_features(data,config,use_cache=False)
+    second=run(config,data=data,features=changed,status=status,output=False,collect_selection=True)
+    columns=['date','security','score','rank','eligible','is_st']
+    before=lambda result:result.selection[result.selection.date<'2025-01-15'][columns]
+    import pandas as pd
+    pd.testing.assert_frame_equal(before(first),before(second),check_exact=True)
+    assert first.summary['exit_planning']['uses_future_market_data']
+    assert first.summary['ending_positions']==second.summary['ending_positions']==0

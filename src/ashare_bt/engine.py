@@ -92,7 +92,7 @@ def _simulate(config, strategy, data, features, status, source, progress, cancel
     ledger = Ledger(config.initial_cash, config.accounting_mode, data.dates[initial_row])
     ledger.handlers.update(event_handlers or {})
     broker = Broker(config, data, features, status, ledger)
-    planner = ExitPlanner(config, data, broker)
+    planner = ExitPlanner(config, data, broker, lambda: source.known(at(ledger.day, 'decision')))
     runtime_events, equity_rows, position_rows, universe_rows = [], [], [], []
     selection_frames = []
     diagnostic_rows = []
@@ -236,11 +236,10 @@ def _simulate(config, strategy, data, features, status, source, progress, cancel
                     buy = max(ZERO, wanted - held)
                     rule = broker.rule(security)
                     buy = dec(int(buy) // rule.step * rule.step)
-                    predicted = min(buy, (broker.capacity(row, column) / price).to_integral_value(rounding=ROUND_FLOOR))
-                    if buy >= rule.minimum and planner.allow_buy(security, held + predicted, row):
+                    if buy >= rule.minimum and planner.allow_buy(security, held + buy, row):
                         broker.submit(security, "buy", buy, row, next_row, target.reason, priority)
                     elif buy >= rule.minimum:
-                        emit("buy_filtered_by_exit_plan", row, "decision", {"requested": str(buy), "forecast_fill": str(predicted)}, security)
+                        emit("buy_filtered_by_exit_plan", row, "decision", {"requested": str(buy), "basis": "新增买入经退出模块实际可卖路径核验"}, security)
         for security, position in list(ledger.positions.items()):
             if security not in decision_weights and position.quantity < 1 and next_row < len(data.dates):
                 broker.tail_exits[security] = next_row

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from datetime import datetime
-from html import escape
 from importlib.metadata import version
 import platform
 import sys
@@ -46,6 +45,14 @@ def summarize(config, tables, coverage, device, reference, extra):
         "capacity_constrained_orders": int(extra["order_events"].reason.str.contains("容量").sum()) if len(extra["order_events"]) else 0,
         "capacity_constrained_notional": str(sum((dec(value) for value in orders.capacity_unfilled_notional),dec(0))) if len(orders) else "0",
         "exit_mode": config.exit_mode, "exit_label": EXIT_MODES[config.exit_mode],
+        "exit_planning": {
+            "basis": "actual_path" if config.exit_mode == "latest_feasible" else "daily_rules",
+            "uses_future_market_data": config.exit_mode == "latest_feasible",
+            "scope": "退出倒排与新增买入的期末退出可行性校验" if config.exit_mode == "latest_feasible" else "当前时点规则",
+            "information_boundary": "策略因子、选股与策略回调按当前可获知时间截断；日常撮合按该次开盘规则执行",
+            "completed": not ledger.positions and not any(r["amount"] for r in ledger.receivables.values()) and not any(r["quantity"] for r in ledger.pending.values()),
+            "disclosure": "本结果的退出规划使用截至期末的后续实际行情倒排，包含新增买入能否按期退出的校验；该功能采用事后规划口径。策略因子、选股、策略回调与日常撮合保持原有时间边界。" if config.exit_mode == "latest_feasible" else "按逐日可获知信息执行所选末日规则。",
+        },
         "terminal_assumptions": extra["terminal_settlements"].to_dict("records"),
         "pending_rights": ledger.pending, "receivables": ledger.receivables, "liabilities": ledger.liabilities,
         "accounting_mode": config.accounting_mode, "status_coverage": coverage,
@@ -56,7 +63,7 @@ def summarize(config, tables, coverage, device, reference, extra):
             "完整日线的当日成交额用于开盘记录有效性核验；高低收价格用于收盘诊断。",
             "BaoStock 逐日 ST 状态推定在当日开盘前可知；带明确可获知时间的覆盖事件按其时间执行。",
             "价格边界为历史规则与复权参考价推算的候选，首次观测与业务上市事实分别记录。",
-            "容量仅使用决策日已知成交额；日频开盘成交采用方向性封板规则，盘口排队由更细数据扩展。",
+            "每次开盘的容量使用其前一决策日成交额与此前 20 日均额；退出模块按这些已实现容量、开盘价和限制倒排，专用后续行情访问包含新增买入退出可行性校验。" if config.exit_mode == "latest_feasible" else "容量仅使用决策日已知成交额；日频开盘成交采用方向性封板规则，盘口排队由更细数据扩展。",
         ],
         "metric_definitions": {"return": "按基金份额法剔除入出金影响的区间收益", "annual_return": "以每年 252 个交易日折算",
                                "max_drawdown": "从此前最高单位净值到随后低点的最大跌幅", "sharpe": "日收益均值除以日收益标准差后年化；无风险利率取零",
@@ -82,36 +89,129 @@ def chart_svg(equity, reference=None):
     for i, (series_values, color) in enumerate(zip(series, ["#315ee8", "#98a6c0"])):
         dash = 'stroke-dasharray="5,5"' if i else ""
         lines += f'<polyline points="{points(series_values)}" fill="none" stroke="{color}" stroke-width="{3 if i == 0 else 1.8}" {dash}/>'
-    return f'<svg viewBox="0 0 940 290" role="img" aria-label="策略与参考组合累计收益曲线">{grid}{lines}<text x="50" y="278" font-size="12" fill="#77849c">{equity.date.iloc[0]}</text><text x="820" y="278" font-size="12" fill="#77849c">{equity.date.iloc[-1]}</text></svg>'
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="940" height="290" viewBox="0 0 940 290" role="img" aria-label="策略与参考组合累计收益曲线">{grid}{lines}<text x="50" y="278" font-size="12" fill="#77849c">{equity.date.iloc[0]}</text><text x="820" y="278" font-size="12" fill="#77849c">{equity.date.iloc[-1]}</text></svg>'
 
 
 def write_report(directory, summary, equity, reference=None):
     s = summary
-    yuan = lambda value: f"¥ {float(value):,.2f}"
-    metrics = [("投资赚亏", yuan(s["net_profit"])), ("区间收益", f'{s["return"]:.2%}'),
-               ("最大回撤", f'{s["max_drawdown"]:.2%}'), ("平均实际仓位", f'{s["average_exposure"]:.2%}')]
-    cards = "".join(f'<div class="metric"><span>{label}</span><strong>{value}</strong></div>' for label,value in metrics)
-    costs = "".join(f'<tr><td>{label}</td><td>{yuan(s["costs"].get(key,0))}</td><td>{description}</td></tr>' for key,label,description in
-                    [("commission","佣金",f'单边万分之 {float(s["config"]["commission_rate"])*10000:g}，每单至少 {s["config"]["min_commission"]} 元'),
-                     ("stamp_tax","印花税",f'卖出金额的万分之 {float(s["config"]["stamp_tax_rate"])*10000:g}'),
-                     ("transfer","过户费","按历史生效费率"),("slippage","滑点成本",f'成交金额的万分之 {float(s["config"]["slippage_rate"])*10000:g}，独立计费'),("tax","显式税款","依注入金额应计，支付与负债分别记账"),("fee","显式费用","依注入的实际金额事件")])
-    assumptions = "".join(f'<li>{escape(line)}</li>' for line in s["research_assumptions"])
-    sources = "".join(f'<li><a href="{escape(item["url"],quote=True)}">{escape(item["subject"])}</a></li>' for item in s["rule_sources"])
-    html = f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{escape(s['name'])} · 回测报告</title>
-<style>body{{margin:0;background:#f5f7fc;color:#22304b;font:15px/1.8 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}}main{{max-width:1100px;margin:48px auto;padding:0 24px}}header,section{{background:white;border:1px solid #e4e9f2;border-radius:20px;padding:30px;margin:22px 0}}.eyebrow{{color:#315ee8;font-size:12px;letter-spacing:2px}}h1{{font-size:30px;margin:12px 0}}h2{{font-size:20px;margin:0 0 16px}}p,li{{color:#65728b}}.metrics{{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}}.metric span{{display:block;color:#78859c;font-size:13px}}strong{{font-size:25px;font-variant-numeric:tabular-nums}}table{{border-collapse:collapse;width:100%;text-align:left}}td,th{{border-bottom:1px solid #edf0f7;padding:12px}}a{{color:#315ee8}}.tag{{border-radius:8px;background:#edf2ff;padding:4px 9px;color:#315ee8}}@media(max-width:700px){{.metrics{{grid-template-columns:1fr 1fr}}strong{{font-size:19px}}section,header{{padding:20px}}}}</style>
-<main><header><span class="eyebrow">GUANLAN / A SHARE RESEARCH</span><h1>{escape(s['name'])}</h1><p>{s['start']} — {s['end']} · {s['trading_days']} 个交易日 · 初始资金 {yuan(s['initial_cash'])}</p><span class="tag">{s['exit_label']}</span></header>
-<section class="metrics">{cards}</section><section><h2>资金经历了什么</h2><p>蓝线是策略，灰线是首次动量篮子买入持有的参考组合。收益曲线按份额计量，入出金另行记录。</p>{chart_svg(equity,reference)}</section>
-<section><h2>资金的执行结果</h2><p>目标仓位 {s['target_exposure']:.1%}，平均实际仓位 {s['average_exposure']:.1%}。成交 {s['trade_count']:,} 笔，{s['capacity_constrained_orders']:,} 笔订单记录容量限制。因容量到期的委托余量累计折合 {yuan(s['capacity_constrained_notional'])}，按各次开盘价计算，包含买卖双向及跨日重复尝试。容量按每证券共享额度执行，现金和受限持仓持续列示。</p><table><tr><td>终点净资产</td><td>{yuan(s['ending_nav'])}</td></tr><tr><td>终点现金 / 股票市值</td><td>{yuan(s['ending_cash'])} / {yuan(s['ending_market_value'])}</td></tr><tr><td>应收 / 待结算权益 / 负债</td><td>{yuan(s['ending_receivables'])} / {yuan(s['ending_pending_equity'])} / {yuan(s['ending_liabilities'])}</td></tr><tr><td>陈旧估值对应市值</td><td>{yuan(s['stale_value'])}</td></tr><tr><td>首次成交</td><td>{s['first_trade_date'] or '等待合格信号'}</td></tr></table></section>
-<section><h2>交易成本去向</h2><table><thead><tr><th>项目</th><th>金额</th><th>规则</th></tr></thead><tbody>{costs}<tr><td>合计</td><td>{yuan(s['total_costs'])}</td><td>费用按 Decimal 逐笔记账</td></tr></tbody></table></section>
-<section><h2>结果的解释边界</h2><ul>{assumptions}</ul><p>证券池审计：{s['status_coverage']['covered_stock_days']:,} / {s['status_coverage']['required_stock_days']:,} 个待选股票日有历史状态证据。计算设备 {escape(s['compute']['device'])}，float32 / {s['compute']['block_days']} 日分块。账本、订单、成交及逐日选股文件与本报告保存在同一目录。</p></section>
-<section><h2>规则来源与复现</h2><ul>{sources}</ul><p>运行编号 {escape(s['run_id'])}<br>数据指纹 {s['input_fingerprint']}<br>状态指纹 {s['status_fingerprint']}</p></section></main></html>'''
-    (directory / "report.html").write_text(html, encoding="utf-8")
+    yuan = lambda value: f"{dec(value):,.2f} 元"
+    costs = []
+    for key, label, description in [
+        ('commission', '佣金', f'单边万分之 {float(s["config"]["commission_rate"])*10000:g}，每单至少 {s["config"]["min_commission"]} 元'),
+        ('stamp_tax', '印花税', f'卖出金额的万分之 {float(s["config"]["stamp_tax_rate"])*10000:g}'),
+        ('transfer', '过户费', '按历史生效费率'),
+        ('slippage', '滑点成本', f'成交金额的万分之 {float(s["config"]["slippage_rate"])*10000:g}，独立计费'),
+        ('tax', '显式税款', '依注入金额应计，支付与负债分别记账'),
+        ('fee', '显式费用', '依注入的实际金额事件'),
+    ]:
+        costs.append(f'| {label} | {yuan(s["costs"].get(key,0))} | {description} |')
+    assumptions = '\n'.join('- ' + line for line in s['research_assumptions'])
+    sources = '\n'.join(f'- [{item["subject"]}]({item["url"]})' for item in s['rule_sources'])
+    completion = '已结清持仓及待结算权益' if s['exit_planning']['completed'] else '存在受限持仓或待结算权益，详见账户与退出记录'
+    text = f'''# {s['name']} · 中文回测报告
+
+{s['start']} 至 {s['end']}，共 **{s['trading_days']} 个交易日**。初始资金 **{yuan(s['initial_cash'])}**。
+
+## 1. 先看账户赚亏
+
+| 观察项目 | 实际结果 |
+|---|---:|
+| 投资赚亏 | {yuan(s['net_profit'])} |
+| 区间收益率 | {s['return']:.2%} |
+| 最大回撤 | {s['max_drawdown']:.2%} |
+| 平均实际仓位 | {s['average_exposure']:.2%} |
+| 目标仓位 | {s['target_exposure']:.2%} |
+| 首笔成交 | {s['first_trade_date'] or '等待合格信号'} |
+
+“投资赚亏”是期末净资产减去初始资金和净入金，已经扣除已计交易成本。“最大回撤”表示资金从此前最高点回落的最大比例。目标仓位表示策略希望投入的比例，实际仓位由成交和账户规则形成。
+
+## 2. 退出方式与后续行情使用范围
+
+**退出方式：{s['exit_label']}。**
+
+{s['exit_planning']['disclosure']}
+
+期末退出状态：**{completion}**。
+
+默认退出逐开盘重放实际价格、逐日规则容量、封板、T+1 与数量规则，倒排最晚启动日。每次开盘容量仍为其前一决策日成交额与此前 20 日均额较小值的 {float(s['config']['participation']):.2%}，同证券累计共享。新增买入按容量允许的最大潜在成交量校验退出可行性，实际买入再由资金和规则决定。后续公告继续按当前可获知时间筛选。该退出功能形成的订单、持仓与收益具有上述事后规划口径。[^exit]
+
+## 3. 资金曲线
+
+![策略与参考组合的累计收益曲线](equity-curve.svg)
+
+蓝线表示本次策略，灰色虚线表示首次动量篮子买入持有的参考组合；两者使用相同初始资金、费用和退出方式。收益曲线按份额计量，入出金另行记录。聚合曲线见 [账户净值 CSV](equity.csv) 与 [参考净值 CSV](benchmark_equity.csv)。
+
+## 4. 期末资金与执行结果
+
+| 账户项目 | 金额或数量 |
+|---|---:|
+| 期末净资产 | {yuan(s['ending_nav'])} |
+| 期末现金 | {yuan(s['ending_cash'])} |
+| 期末股票及等价持仓市值 | {yuan(s['ending_market_value'])} |
+| 应收款 | {yuan(s['ending_receivables'])} |
+| 待结算权益 | {yuan(s['ending_pending_equity'])} |
+| 负债 | {yuan(s['ending_liabilities'])} |
+| 陈旧估值对应市值 | {yuan(s['stale_value'])} |
+| 期末持仓证券数 | {s['ending_positions']} |
+| 成交笔数 | {s['trade_count']:,} |
+| 记录容量限制的订单数 | {s['capacity_constrained_orders']:,} |
+| 因容量到期的委托余量累计折合 | {yuan(s['capacity_constrained_notional'])} |
+
+容量受限金额按各次开盘价折算，包含买卖双向及跨日重复尝试；它用于解释执行约束。完整逐笔运行目录中的 `exits.parquet` 保存逐日容量路径、最晚启动日、实际卖出进度和剩余数量。
+
+## 5. 交易成本去向
+
+| 项目 | 金额 | 规则 |
+|---|---:|---|
+{chr(10).join(costs)}
+| 合计 | {yuan(s['total_costs'])} | Decimal 逐笔记账 |
+
+## 6. 数据与研究假设
+
+{assumptions}
+
+历史状态审计覆盖 **{s['status_coverage']['covered_stock_days']:,} / {s['status_coverage']['required_stock_days']:,}** 个待选股票日。预热自 {s['warmup']['first']} 开始，首批决策日为 {s['warmup']['last_decision']}；业绩仅统计上列交易区间。计算设备为 **{s['compute']['device']}**，float32、{s['compute']['block_days']} 日分块。现金、费用与成本采用 Decimal 顺序记账。
+
+## 7. 规则来源与复现
+
+{sources}
+
+- 运行编号：`{s['run_id']}`
+- 运行配置：[config.json](config.json)
+- 精确金额与指标：[summary.json](summary.json)
+- 设备、依赖与源码哈希：[manifest.json](manifest.json)
+- 数据指纹：`{s['input_fingerprint']}`
+- 状态指纹：`{s['status_fingerprint']}`
+
+本地运行保留订单、成交、借贷分录、持仓、费用、事件、逐日选股与源码快照，可通过工作台或 CLI 追溯单笔成交。
+
+[^exit]: 后续行情访问入口集中在 `src/ashare_bt/exit_path.py`，仅服务退出倒排与新增买入的退出可行性校验；策略历史接口位于 `data.py::History`，日常撮合位于 `execution.py::Broker.match_open`。
+'''
+    if s['exit_mode'] != 'latest_feasible':
+        start = text.index('默认退出逐开盘重放')
+        end = text.index('\n\n## 3.', start)
+        text = text[:start] + '所选末日模式按逐日信息执行；受限权益或假设清算按本报告记录列示。' + text[end:]
+        text = text[:text.index('\n[^exit]:')] + '\n'
+    if s['terminal_assumptions']:
+        rows = []
+        for record in s['terminal_assumptions']:
+            rows.append(f"| {record['security']} | {record['type']} | {record['quantity']} | {record['price']} | {yuan(record['gross'])} | {yuan(record['fees'])} | {record['basis']} |")
+        detail = '\n\n### 终点假设清算明细\n\n| 证券 | 类型 | 数量 | 估值价格 | 变现金额 | 费用 | 假设依据 |\n|---|---|---:|---:|---:|---:|---|\n' + '\n'.join(rows)
+        text = text.replace('\n\n## 3.', detail + '\n\n## 3.', 1)
+    if reference is not None:
+        reference.to_csv(directory / 'benchmark_equity.csv', index=False, encoding='utf-8-sig')
+    else:
+        text = text.replace(' 与 [参考净值 CSV](benchmark_equity.csv)', '')
+        text = text.replace('蓝线表示本次策略，灰色虚线表示首次动量篮子买入持有的参考组合；两者使用相同初始资金、费用和退出方式。', '蓝线表示本次策略。')
+    (directory / 'report.md').write_text(text, encoding='utf-8')
+    (directory / 'equity-curve.svg').write_text(chart_svg(equity, reference), encoding='utf-8')
     packages = {}
     for name in ("numpy","pandas","pyarrow","torch","fastapi","baostock"):
         packages[name] = version(name)
     source_root = __import__("pathlib").Path(__file__).parent
     manifest = {"python": sys.version, "platform": f"{platform.system()} {platform.release()} {platform.machine()}", "dependencies": packages,
-                "compute": s["compute"], "data_fingerprint": s["input_fingerprint"],
+                "report": {"format": "markdown", "document": "report.md", "chart": "equity-curve.svg"},
+                "compute": s["compute"], "exit_planning": s["exit_planning"], "data_fingerprint": s["input_fingerprint"],
                 "status_fingerprint": s["status_fingerprint"], "ranges": {"warmup": s["warmup"],"start":s["start"],"end":s["end"],"days":s["trading_days"]},
                 "source_sha256": {p.name: sha256(p) for p in sorted(source_root.glob("*.py"))}}
     snapshot = directory / "source"

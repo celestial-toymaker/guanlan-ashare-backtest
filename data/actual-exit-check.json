@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "scope": "后续行情仅供退出倒排与新增买入退出可行性校验；策略视图与日常撮合保持原有时间边界",
+  "runs": [
+    {
+      "run_id": "full-bollinger",
+      "path_records": 8477,
+      "projected_fills_checked": 119353,
+      "terminal_equity_cleared": true,
+      "synthetic_terminal_settlement": false
+    },
+    {
+      "run_id": "full-breakout",
+      "path_records": 8486,
+      "projected_fills_checked": 251477,
+      "terminal_equity_cleared": true,
+      "synthetic_terminal_settlement": false
+    },
+    {
+      "run_id": "full-buy-hold",
+      "path_records": 424,
+      "projected_fills_checked": 845,
+      "terminal_equity_cleared": true,
+      "synthetic_terminal_settlement": false
+    },
+    {
+      "run_id": "full-liquidity",
+      "path_records": 8476,
+      "projected_fills_checked": 32119,
+      "terminal_equity_cleared": true,
+      "synthetic_terminal_settlement": false
+    },
+    {
+      "run_id": "full-low-volatility",
+      "path_records": 8473,
+      "projected_fills_checked": 33949,
+      "terminal_equity_cleared": true,
+      "synthetic_terminal_settlement": false
+    },
+    {
+      "run_id": "full-momentum",
+      "path_records": 8477,
+      "projected_fills_checked": 45345,
+      "terminal_equity_cleared": true,
+      "synthetic_terminal_settlement": false
+    },
+    {
+      "run_id": "full-moving-average",
+      "path_records": 8475,
+      "projected_fills_checked": 43000,
+      "terminal_equity_cleared": true,
+      "synthetic_terminal_settlement": false
+    },
+    {
+      "run_id": "full-multifactor",
+      "path_records": 8479,
+      "projected_fills_checked": 14056,
+      "terminal_equity_cleared": true,
+      "synthetic_terminal_settlement": false
+    },
+    {
+      "run_id": "full-reversal",
+      "path_records": 8448,
+      "projected_fills_checked": 26301,
+      "terminal_equity_cleared": true,
+      "synthetic_terminal_settlement": false
+    },
+    {
+      "run_id": "full-rsi",
+      "path_records": 8470,
+      "projected_fills_checked": 162975,
+      "terminal_equity_cleared": true,
+      "synthetic_terminal_settlement": false
+    },
+    {
+      "run_id": "report-5dr",
+      "path_records": 8448,
+      "projected_fills_checked": 26301,
+      "terminal_equity_cleared": true,
+      "synthetic_terminal_settlement": false
+    }
+  ],
+  "projected_fills_checked": 755721,
+  "data_fingerprint": "e4bb3556203b55264d5bf27c750d45ca8ac8a990cb095dcb7bdebcc1a18e6d44"
+}

@@ -47,6 +47,13 @@ def check():
                 if current!=digest:application_changes[name]={'run_sha256':digest,'publication_sha256':current}
             else:
                 assert current==digest,(spec.id,name)
+        assert summary['exit_planning']['basis']=='actual_path' and summary['exit_planning']['completed']
+        assert summary['ending_positions']==0 and D(summary['ending_market_value'])==0
+        assert D(summary['ending_receivables'])==D(summary['ending_pending_equity'])==0
+        assert not summary['terminal_assumptions']
+        exits=pd.read_parquet(directory/'exits.parquet')
+        if len(exits):
+            assert exits.uses_future_market_data.all()
         assert summary['input_fingerprint']==data.fingerprint
         assert summary['status_fingerprint']==status.fingerprint
         assert summary['status_coverage']['unknown_stock_days']==0
@@ -115,7 +122,8 @@ def check():
         assert reference.to_json()==baseline
         reports.append({'strategy':spec.id,'name':spec.name,'trading_days':len(equity),'trades':len(trades),
                         'non_st_entry':True,'shared_capacity':True,'t_plus_one':True,'fees':True,
-                        'double_entry':True,'source_snapshot':True,'common_reference':True})
+                        'double_entry':True,'source_snapshot':True,'common_reference':True,
+                        'actual_path_exit':True,'terminal_equity_cleared':True})
         print(f"通过：{spec.name}，{len(trades):,} 笔成交",flush=True)
     tests=ET.parse(ROOT/'work/python-tests.xml').getroot().find('testsuite').attrib
     browser=json.loads((ROOT/'work/browser-tests.json').read_text())['stats']

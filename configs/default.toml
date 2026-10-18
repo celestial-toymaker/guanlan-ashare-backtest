@@ -9,6 +9,7 @@ initial_cash = "1000000000.00"
 device = "auto"
 block_days = 128
 accounting_mode = "total_return"
+# 退出专用：使用后续实际行情倒排，并校验新增买入能否在期末前退出。
 exit_mode = "latest_feasible"
 strategy = "momentum"
 rebalance_days = 5

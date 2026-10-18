@@ -27,7 +27,7 @@ def write():
 
 交易与业绩区间为 **2025-01-02 至 2026-09-30，共 424 个交易日**。2024 年数据用于预热，首批委托在 **2024-12-31 收盘**产生，首笔实际成交为 **2025-01-02**。加载区间实际包含 666 日、5,451 列证券；股票池为其中 5,450 列沪深股票。
 
-默认资金 **10 亿元**；买卖佣金各万分之一、每单最低 5 元，卖出印花税万分之五，另计历史过户费与万分之五独立滑点成本。默认 20 日复权动量、5 日调仓、最多 20 只股票、95% 目标仓位，使用按已知信息估算的最晚启动退出方式。
+默认资金 **10 亿元**；买卖佣金各万分之一、每单最低 5 元，卖出印花税万分之五，另计历史过户费与万分之五独立滑点成本。默认 20 日复权动量、5 日调仓、最多 20 只股票、95% 目标仓位，使用按截至期末实际可卖路径倒排的最晚启动退出方式。后续行情仅用于退出倒排及新增买入的退出可行性校验；报告明确标记其事后规划口径。策略因子、选股、策略回调与日常撮合保持原有时间边界，公告按当前可获知时间截断。
 
 ## 2. 5DR 报告样例与十类策略实际结果
 
@@ -43,7 +43,7 @@ def write():
 |---|---:|---:|---:|---:|---:|---:|
 {chr(10).join(rows)}
 
-5DR 样例的区间收益为 **{summary['return']:.2%}**，投资赚亏 **{cash(summary['net_profit'])} 元**，最大回撤 **{summary['max_drawdown']:.2%}**，平均实际仓位 **{summary['average_exposure']:.2%}**。终点净资产为 **{cash(summary['ending_nav'])} 元**，其中现金 **{cash(summary['ending_cash'])} 元**、股票及等价持仓市值 **{cash(summary['ending_market_value'])} 元**。期末余量的成交限制及估值状态保存在 `positions.parquet`，逐证券估算、实际卖出和剩余数量保存在 `exits.parquet`，订单到期原因保存在 `orders.parquet`。
+5DR 样例的区间收益为 **{summary['return']:.2%}**，投资赚亏 **{cash(summary['net_profit'])} 元**，最大回撤 **{summary['max_drawdown']:.2%}**，平均实际仓位 **{summary['average_exposure']:.2%}**。终点净资产为 **{cash(summary['ending_nav'])} 元**，其中现金 **{cash(summary['ending_cash'])} 元**、股票及等价持仓市值 **{cash(summary['ending_market_value'])} 元**。逐日持仓保存在 `positions.parquet`，逐证券实际可卖路径、最晚启动日、实际卖出和剩余数量保存在 `exits.parquet`，订单到期原因保存在 `orders.parquet`。
 
 容量受限委托余量累计折合 **{cash(summary['capacity_constrained_notional'])} 元**。该数值含跨日重复尝试和买卖双向委托，描述执行约束；结合目标仓位和实际仓位阅读。
 
@@ -54,9 +54,10 @@ def write():
 - **数据与状态**：七矩阵入口对齐、2024 预热与业绩分离、终点后截断。425 个历史状态快照覆盖首个决策日及全部交易日；{raw_status['required_stock_days']:,} 个有行情股票日均有状态证据。正式待选范围覆盖 {completed['status']['required_stock_days']:,} 个股票日，待核实数量为 0。
 - **全市场与成交**：十类策略均完成 424 日运行；逐笔核对历史非 ST 买入资格、次日开盘、共享容量、T+1、费用、借贷平衡、终点资产及共同参考组合。
 - **5DR 报告样例**：MPS 重算完整 424 日；订单、成交、账本、净值、持仓、费用、退出、证券池、选股和参考净值十张表与既有 5 日反转结果逐项一致，报告标题、业绩数值和源码快照通过核对。证据见 `data/5dr-report-check.json`。
+- **实际路径倒排**：逐条核对退出重放中的开盘价、当次规则容量、同证券共享上限和终点范围；十类策略与 5DR 样例均结清股票及待结算权益。证据见 `data/actual-exit-check.json`。
 - **完整重放**：CLI 重放的订单、成交、账本、净值、持仓、费用、退出计划、证券池和逐日选股九张表逐项一致，源码快照一致。
 - **Python 与浏览器**：{acceptance['python_tests']} 项 Python 测试、{acceptance['browser_tests']} 项浏览器流程通过；实际检查运行中取消、失败诊断及空结果。桌面和手机尺寸覆盖工作台结果与策略页面。
-- **公司行动**：人工金额检查分红多日期、税款、拆并股与挂单、零碎权益、送转、配股、换股、带现金分拆、代码转换及退市对价；三种退出方式覆盖正常与行情受限情形。
+- **公司行动**：人工金额检查分红多日期、税款、拆并股与挂单、零碎权益、送转、配股、换股、带现金分拆、代码转换及退市对价；三种退出方式覆盖正常与行情受限情形；实际倒排另验证容量下降、T+1、新增买入校验、后续行情访问范围及复权冻结尾差归零。
 - **MPS**：{gpu['device']['device_name']} / PyTorch {gpu['device']['torch']} / float32。64、128、256 日分块检测一致，33 项因子与原始精度基准核对通过，十类策略 425 个决策日的目标组合一致。
 - **CUDA**：同一 PyTorch 计算与验收脚本支持 CUDA。按用户确认的当前 Mac 环境，NVIDIA 实机验收保留待完成状态；入口为 `.venv/bin/python tools/validate_gpu.py --device cuda`。
 - **源码盘点**：固定提交的 RQAlpha、LEAN、Zipline、Backtrader、Qlib 共 177 项逐项映射，其中 RQAlpha 核心事件 45 项、Zipline 消息 13 类与时钟 5 类。
@@ -65,12 +66,12 @@ def write():
 
 ## 4. 文件与复现
 
-- [5DR 样例中文报告](reports/5dr/README.md)、[HTML 报告](reports/5dr/report.html)、[5DR 样例配置](configs/5dr.toml)、[全部策略结果](data/full-acceptance.json)、[综合验收证据](data/acceptance.json)。
+- [5DR 样例中文报告](reports/5dr/README.md)、[Markdown 报告](reports/5dr/report.md)、[5DR 样例配置](configs/5dr.toml)、[全部策略结果](data/full-acceptance.json)、[综合验收证据](data/acceptance.json)。
 - [逐项事件映射](research/event_mapping.md)、[数据审计](data/audit.json)、[MPS 实机证据](data/mps_validation.json)。
 - [完整重放核对](validation/full-replay-check.json)、[浏览器结果](validation/browser-tests.json)、[Python 测试结果](validation/python-tests.xml)、代表性截图目录 `docs/images`。
 - 每个正式运行目录保存 `config.json`、`manifest.json`、七矩阵剖面、历史状态指纹、外部输入事件、观察事件流及应用源码快照。源码交付包为 `data/source-delivery.zip`，逐文件哈希见 `data/source-delivery-manifest.json`。
 
-研究假设包括当日复权因子的开盘前生效推定、完整日线成交额对开盘记录的有效性核验、逐日风险状态的开盘前可知推定。候选涨跌停、首次观测和估值状态均保留推断或来源标签。每份中文报告保存这些解释范围。
+研究假设包括当日复权因子的开盘前生效推定、完整日线成交额对开盘记录的有效性核验、逐日风险状态的开盘前可知推定。候选涨跌停、首次观测和估值状态均保留推断或来源标签。每份 Markdown 中文报告保存这些解释范围，资金曲线为同目录的 `equity-curve.svg`。
 
 仓库发布代码、聚合报告和验收证据。课程原始行情沿用课程下载入口；历史状态原始缓存和完整逐笔运行产物由本地程序生成。发布前的本机复查另见 `validation/publication-python-tests.xml` 和 `validation/publication-frontend-build.log`。回测来源清单保留运行时哈希；工作台服务与界面的发布版本另由当前测试及构建核验，财务计算模块与原始运行逐项对应。
 '''

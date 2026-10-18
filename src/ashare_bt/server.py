@@ -197,7 +197,7 @@ def create_app(root=ROOT):
     @app.get("/api/runs/{ident}/file/{filename}")
     def file(ident:str,filename:str):
         path = contained(run_path(ident),filename)
-        if path.suffix not in {".html",".csv",".parquet",".json",".jsonl"} or not path.exists():
+        if path.suffix not in {".md",".svg",".csv",".parquet",".json",".jsonl"} or not path.exists():
             raise HTTPException(404,"文件将在运行完成后提供")
         return FileResponse(path)
 

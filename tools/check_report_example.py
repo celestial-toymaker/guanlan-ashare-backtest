@@ -24,6 +24,10 @@ def check():
     assert actual['initial_cash'] == '1000000000.00'
     assert actual['commission_rate'] == '0.0001' and actual['stamp_tax_rate'] == '0.0005'
     assert summary['status_coverage']['unknown_stock_days'] == 0
+    assert summary['exit_planning']['basis'] == 'actual_path' and summary['exit_planning']['completed']
+    assert summary['ending_positions'] == 0 and float(summary['ending_market_value']) == 0
+    assert float(summary['ending_receivables']) == float(summary['ending_pending_equity']) == 0
+    assert not summary['terminal_assumptions']
     comparisons = []
     for name in ('orders', 'trades', 'journal', 'equity', 'positions', 'fees', 'exits', 'universe', 'selection', 'benchmark_equity'):
         frame = pd.read_parquet(directory / f'{name}.parquet')
@@ -41,16 +45,18 @@ def check():
                 application_changes[name] = {'run_sha256': digest, 'publication_sha256': current}
         else:
             assert current == digest
-    html = (directory / 'report.html').read_text()
-    assert re.search(r'<h1>[^<]*5DR[^<]*5 日反转', html)
-    assert f'{summary["return"]:.2%}' in html
-    assert f'{summary["max_drawdown"]:.2%}' in html
-    assert f'{float(summary["net_profit"]):,.2f}' in html
+    markdown = (directory / 'report.md').read_text()
+    assert '退出方式与后续行情使用范围' in markdown and '事后规划' in markdown and '新增买入' in markdown
+    assert markdown.startswith('# 5DR') and '5 日反转' in markdown
+    assert '![策略与参考组合的累计收益曲线](equity-curve.svg)' in markdown
+    assert f'{summary["return"]:.2%}' in markdown
+    assert f'{summary["max_drawdown"]:.2%}' in markdown
+    assert f'{float(summary["net_profit"]):,.2f}' in markdown
     report = {'passed': True, 'run_id': summary['run_id'], 'strategy': '5DR（5 日反转）',
               'ranking': '5 日复权收益从低到高，同分按证券代码', 'baseline': str(baseline.relative_to(ROOT)),
               'device': summary['compute']['device'], 'trading_days': summary['trading_days'],
               'tables': comparisons, 'config_sha256': sha256(ROOT / 'configs/5dr.toml'),
-              'report_sha256': sha256(directory / 'report.html'), 'source_sha256': manifest['source_sha256'],
+              'report_sha256': sha256(directory / 'report.md'), 'source_sha256': manifest['source_sha256'],
               'application_publication_changes': application_changes, 'financial_source_matches': True}
     atomic_json(ROOT / 'data/5dr-report-check.json', report)
     print(json.dumps({key: report[key] for key in ('passed', 'run_id', 'strategy', 'device', 'trading_days')}, ensure_ascii=False))

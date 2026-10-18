@@ -43,6 +43,9 @@ def main():
             result=run(config,data=data,features=features,status=status,run_id=ident,progress=progress)
             summary=result.summary
         assert summary['trading_days']==424
+        assert summary['exit_planning']['basis']=='actual_path'
+        assert summary['exit_planning']['completed'],summary
+        assert summary['ending_positions']==0 and float(summary['ending_market_value'])==0
         if spec.id=='momentum':assert summary['first_trade_date']=='2025-01-02'
         reports.append({key:summary[key] for key in ('run_id','strategy','return','net_profit','max_drawdown','average_exposure','trade_count','total_costs','first_trade_date','ending_market_value')})
         atomic_json(config.root/'data/full-acceptance.json',{'completed':len(reports),'total':len(SPECS),'strategies':reports,'status':coverage})

@@ -19,10 +19,10 @@ ROOT_FILES = (
     'web/tsconfig.json', 'web/vite.config.ts', 'web/playwright.config.ts',
 )
 DATA_PROOFS = (
-    'acceptance.json', 'full-acceptance.json', '5dr-report-check.json', 'profile.json',
+    'acceptance.json', 'actual-exit-check.json', 'full-acceptance.json', '5dr-report-check.json', 'profile.json',
     'audit.json', 'mps_validation.json', 'formal-status-coverage.json', 'status/coverage.json',
 )
-REPORT_FILES = ('report.html', 'summary.json', 'config.json', 'manifest.json', 'equity.csv', 'benchmark_equity.csv')
+REPORT_FILES = ('report.md', 'equity-curve.svg', 'summary.json', 'config.json', 'manifest.json', 'equity.csv', 'benchmark_equity.csv')
 VALIDATION_FILES = (
     'python-tests.xml', 'browser-tests.json', 'full-replay-check.json', 'lifecycle-check.json',
     'lifecycle-browser.json', '5dr-browser-check.json',

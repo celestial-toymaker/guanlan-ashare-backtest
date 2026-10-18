@@ -518,6 +518,12 @@ export default function App() {
               </button>
             </Alert>
           )}
+          {summary?.exit_planning?.uses_future_market_data && (
+            <div className="soft-note" style={{ marginBottom: 20 }}>
+              <Info size={19} />
+              <p><strong>退出采用事后规划口径。</strong>{summary.exit_planning.disclosure}</p>
+            </div>
+          )}
           {activeJobs.length > 0 && (
             <div className="queue-banner">
               <div className="queue-icon">
@@ -771,11 +777,11 @@ export default function App() {
                     {summary && (
                       <a
                         className="text-button"
-                        href={`/api/runs/${activeId}/file/report.html`}
+                        href={`/api/runs/${activeId}/file/report.md`}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        完整报告
+                        Markdown 报告
                         <ArrowUpRight size={15} />
                       </a>
                     )}
@@ -834,7 +840,7 @@ export default function App() {
                     <CheckCircle2 size={17} />
                     <span>
                       {summary ? summary.exit_label : "按规则最晚启动退出"}
-                      <small>每天根据已知容量更新清仓计划</small>
+                      <small>{summary?.exit_mode === "latest_feasible" || !summary ? "按后续实际可卖路径倒排" : "按所选末日规则处理"}</small>
                     </span>
                   </div>
                 </section>
@@ -1189,7 +1195,7 @@ function PageIntro({ view }: { view: string }) {
     ],
     exits: [
       "为退出，留出交易时间。",
-      "容量、数量与 T+1 共同决定预计需要多少个开盘。",
+      "逐开盘核对容量、封板、数量与 T+1，查看实际路径与退出进度。",
     ],
   };
   return (
@@ -1687,8 +1693,7 @@ function Exits({
           <Pill>本次运行</Pill>
           <h2>{summary.exit_label}</h2>
           <p>
-            每个收盘，按当时持仓、已知成交容量、合法数量、T+1
-            与剩余交易日重算；触发后持续退出。
+            {summary.exit_planning?.disclosure || "按所选末日规则执行，记录实际成交与剩余权益。"}
           </p>
         </div>
         <div className="exit-ending">
@@ -1705,7 +1710,7 @@ function Exits({
       </div>
       <section className="panel table-panel">
         <div className="table-toolbar">
-          <h2>逐证券退出估算</h2>
+          <h2>逐证券实际退出路径</h2>
           <DatePick
             value={date}
             onChange={setDate}
@@ -1721,10 +1726,10 @@ function Exits({
                 <tr>
                   <th>证券</th>
                   <th className="numeric">持仓单位</th>
-                  <th className="numeric">已知单日容量</th>
-                  <th className="numeric">预计所需开盘</th>
+                  <th className="numeric">当前规则容量</th>
+                  <th className="numeric">路径所需开盘</th>
                   <th className="numeric">剩余交易日</th>
-                  <th>预计最晚启动日</th>
+                  <th>实际路径最晚启动日</th>
                   <th>计划 / 实际启动</th>
                   <th className="numeric">已卖 / 剩余单位</th>
                   <th>当前动作</th>
@@ -1739,12 +1744,12 @@ function Exits({
                     <td className="numeric">{number(r.quantity, 3)}</td>
                     <td className="numeric">¥ {cash(r.known_capacity)}</td>
                     <td className="numeric">
-                      {r.required_sessions ?? "待恢复容量"}
+                      {r.required_sessions ?? "路径受限 / 末日规则"}
                     </td>
                     <td className="numeric">{r.remaining_sessions}</td>
-                    <td>{r.estimated_latest_start || "待估算"}</td>
+                    <td>{r.actual_latest_start || (r.path_feasible === false ? "路径受限" : "已结清 / 末日规则")}</td>
                     <td>
-                      {r.planned_start || "随估算更新"}
+                      {r.planned_start || "等待路径触发"}
                       <small className="cell-sub">
                         实际：{r.actual_start || "等待触发"}
                       </small>
@@ -1757,6 +1762,12 @@ function Exits({
                       <Pill tone={r.exit_active ? "orange" : "green"}>
                         {r.planned_action}
                       </Pill>
+                      {r.capacity_path && JSON.parse(r.capacity_path).length > 0 && <details>
+                        <summary>查看逐日容量</summary>
+                        {JSON.parse(r.capacity_path).map((cell: Row, i: number) => <small className="cell-sub" key={i}>
+                          {cell.date} · 容量 ¥{number(cell.capacity)} · {number(cell.quantity, 0)} 单位 × ¥{number(cell.price)}
+                        </small>)}
+                      </details>}
                     </td>
                   </tr>
                 ))}
@@ -1766,7 +1777,7 @@ function Exits({
         ) : (
           <Empty
             title="当天持仓已结清，或尚待建仓"
-            text="选择其他日期可以查看每次持仓退出估算。"
+            text="选择其他日期可以查看每次持仓的实际退出路径。"
           />
         )}
         <Pager
@@ -1778,7 +1789,7 @@ function Exits({
       <div className="soft-note">
         <Clock3 size={19} />
         <p>
-          “预计最晚启动”是一份随已知数据更新的计划。停牌、封板或成交额下降可能令实际进度落后。末日按规则退出保留剩余权益；末日强制结清将额外的估值清算假设单列在报告。
+          默认退出逐日倒排截至期末的实际可卖路径；新增买入按该次开盘容量允许的最大潜在成交量校验退出可行性，实际买入仍由资金与规则决定。后续行情仅供此功能使用。公告和外部事件继续按当前可获知时间截断。末日按规则退出保留受限权益；末日强制结清单列估值清算假设。
         </p>
       </div>
       {summary.terminal_assumptions?.length > 0 && (
@@ -2229,7 +2240,7 @@ function ConfigModal({
                   </strong>
                   <p>
                     {key === "latest_feasible"
-                      ? "逐证券估算所需交易日，提前持续卖出。计划每天按已知信息更新。"
+                      ? "使用截至期末的后续实际行情倒排最晚退出日，并校验新增买入能否按期退出；属于事后规划。"
                       : key === "force_cash"
                         ? "末日正常撮合后，以收盘或明确估值假设变现余量，清算假设另行列示。"
                         : "最后交易日按正常规则卖出，受限持仓与权益保留在终点报告。"}
@@ -2364,7 +2375,7 @@ function ConfigModal({
             <p className="field-note">
               更长的策略观察窗口会自动提高有效历史要求，并写入实际运行配置。
               预热从 2024 年开始，区间终点后数据在入口截断。默认首批委托于
-              2024-12-31 收盘生成。当前口径与两个已确认研究假设会写入每份报告。
+              2024-12-31 收盘生成。退出口径及已确认研究假设会写入每份报告。
             </p>
           </details>
           {error && <Alert>{error}</Alert>}
