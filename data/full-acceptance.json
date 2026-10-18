@@ -1,0 +1,135 @@
+{
+  "completed": 10,
+  "total": 10,
+  "strategies": [
+    {
+      "run_id": "full-momentum",
+      "strategy": "momentum",
+      "return": -0.029160789880000038,
+      "net_profit": "-29160789.88",
+      "max_drawdown": 0.22182890619056173,
+      "average_exposure": 0.2852831217871118,
+      "trade_count": 3030,
+      "total_costs": "18433613.87",
+      "first_trade_date": "2025-01-02",
+      "ending_market_value": "15908094.29"
+    },
+    {
+      "run_id": "full-liquidity",
+      "strategy": "liquidity",
+      "return": 0.44084045125999993,
+      "net_profit": "440840451.26",
+      "max_drawdown": 0.38251580948030295,
+      "average_exposure": 0.8520554333880388,
+      "trade_count": 2631,
+      "total_costs": "21822017.28",
+      "first_trade_date": "2025-01-02",
+      "ending_market_value": "53522881.00"
+    },
+    {
+      "run_id": "full-buy-hold",
+      "strategy": "buy_hold",
+      "return": 0.0009893588200000636,
+      "net_profit": "989358.82",
+      "max_drawdown": 0.003118165746951007,
+      "average_exposure": 0.013924203095793102,
+      "trade_count": 4,
+      "total_costs": "24826.02",
+      "first_trade_date": "2025-01-02",
+      "ending_market_value": "0"
+    },
+    {
+      "run_id": "full-reversal",
+      "strategy": "reversal",
+      "return": -0.04525071732999997,
+      "net_profit": "-45250717.33",
+      "max_drawdown": 0.09169588655455829,
+      "average_exposure": 0.08064902539682876,
+      "trade_count": 3044,
+      "total_costs": "9074817.48",
+      "first_trade_date": "2025-01-02",
+      "ending_market_value": "2871966.93"
+    },
+    {
+      "run_id": "full-moving-average",
+      "strategy": "moving_average",
+      "return": 0.16691741642000002,
+      "net_profit": "166917416.42",
+      "max_drawdown": 0.43453381028214,
+      "average_exposure": 0.9185097864758899,
+      "trade_count": 9351,
+      "total_costs": "30438890.13",
+      "first_trade_date": "2025-01-02",
+      "ending_market_value": "41906811.00"
+    },
+    {
+      "run_id": "full-breakout",
+      "strategy": "breakout",
+      "return": 0.1673227477000001,
+      "net_profit": "167322747.70",
+      "max_drawdown": 0.16092564019417477,
+      "average_exposure": 0.8748511515693398,
+      "trade_count": 8660,
+      "total_costs": "16349614.56",
+      "first_trade_date": "2025-01-02",
+      "ending_market_value": "89744527.28"
+    },
+    {
+      "run_id": "full-low-volatility",
+      "strategy": "low_volatility",
+      "return": 0.011612673359999937,
+      "net_profit": "11612673.36",
+      "max_drawdown": 0.022539468738017487,
+      "average_exposure": 0.13274732646808907,
+      "trade_count": 2297,
+      "total_costs": "4392257.75",
+      "first_trade_date": "2025-01-02",
+      "ending_market_value": "2691018.77"
+    },
+    {
+      "run_id": "full-rsi",
+      "strategy": "rsi",
+      "return": 0.0189956658799999,
+      "net_profit": "18995665.88",
+      "max_drawdown": 0.19429528650225514,
+      "average_exposure": 0.6585479889119323,
+      "trade_count": 8625,
+      "total_costs": "21773229.02",
+      "first_trade_date": "2025-01-02",
+      "ending_market_value": "33139955.94"
+    },
+    {
+      "run_id": "full-bollinger",
+      "strategy": "bollinger",
+      "return": 0.0729226837300001,
+      "net_profit": "72922683.73",
+      "max_drawdown": 0.2379902075304423,
+      "average_exposure": 0.6983413095092434,
+      "trade_count": 9165,
+      "total_costs": "30014347.53",
+      "first_trade_date": "2025-01-02",
+      "ending_market_value": "49647208.03"
+    },
+    {
+      "run_id": "full-multifactor",
+      "strategy": "multifactor",
+      "return": 0.003554524759999955,
+      "net_profit": "3554524.76",
+      "max_drawdown": 0.018801955065016474,
+      "average_exposure": 0.044431784283549006,
+      "trade_count": 3046,
+      "total_costs": "5419458.69",
+      "first_trade_date": "2025-01-02",
+      "ending_market_value": "78720.00"
+    }
+  ],
+  "status": {
+    "required_stock_days": 2155920,
+    "covered_stock_days": 2155920,
+    "unknown_stock_days": 0,
+    "unknown_examples": [],
+    "st_stock_days": 64273,
+    "source_fingerprint": "836ff2bb30f416ea1d05277ced05819dd565629f3d6f3ea0ca223c84a97405a4",
+    "availability_basis": "逐日风险状态按当日开盘前生效推定；有明确时间的覆盖事件按其可获知时间执行"
+  }
+}

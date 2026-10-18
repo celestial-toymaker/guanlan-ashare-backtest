@@ -1,0 +1,314 @@
+{
+  "device": {
+    "device": "mps",
+    "device_name": "Apple M3 Pro",
+    "torch": "2.5.1",
+    "cuda": null,
+    "dtype": "float32",
+    "block_days": 128,
+    "windows": [
+      5,
+      10,
+      14,
+      20,
+      60
+    ],
+    "cache_key": "0b08e0535951f9be4537ddd403b65b032564fa08332576ed1f9aced8bb179551",
+    "cache_hit": true,
+    "seconds": 1.594
+  },
+  "shape": [
+    666,
+    5451
+  ],
+  "checks": {
+    "block_64": {
+      "flags_equal": true,
+      "max_absolute_error": {
+        "ma_5": 0.0,
+        "std_60": 0.0,
+        "low_prev_60": 0.0,
+        "ma_20": 0.0,
+        "mom_60": 0.0,
+        "mom_14": 0.0,
+        "mom_5": 0.0,
+        "high_prev_5": 0.0,
+        "ma_14": 0.0,
+        "low_prev_14": 0.0,
+        "rsi_14": 0.0,
+        "low_prev_10": 0.0,
+        "vol_20": 0.0,
+        "vol_60": 0.0,
+        "std_20": 0.0,
+        "std_14": 0.0,
+        "history_valid": 0.0,
+        "high_prev_60": 0.0,
+        "std_10": 0.0,
+        "high_prev_14": 0.0,
+        "vol_10": 0.0,
+        "adv_20": 0.0,
+        "high_prev_10": 0.0,
+        "mom_10": 0.0,
+        "vol_14": 0.0,
+        "ma_60": 0.0,
+        "ret_1": 0.0,
+        "ma_10": 0.0,
+        "mom_20": 0.0,
+        "std_5": 0.0,
+        "high_prev_20": 0.0,
+        "vol_5": 0.0,
+        "low_prev_5": 0.0,
+        "low_prev_20": 0.0
+      }
+    },
+    "block_256": {
+      "flags_equal": true,
+      "max_absolute_error": {
+        "ma_5": 0.0,
+        "std_60": 0.0,
+        "low_prev_60": 0.0,
+        "ma_20": 0.0,
+        "mom_60": 0.0,
+        "mom_14": 0.0,
+        "mom_5": 0.0,
+        "high_prev_5": 0.0,
+        "ma_14": 0.0,
+        "low_prev_14": 0.0,
+        "rsi_14": 0.0,
+        "low_prev_10": 0.0,
+        "vol_20": 0.0,
+        "vol_60": 0.0,
+        "std_20": 0.0,
+        "std_14": 0.0,
+        "history_valid": 0.0,
+        "high_prev_60": 0.0,
+        "std_10": 0.0,
+        "high_prev_14": 0.0,
+        "vol_10": 0.0,
+        "adv_20": 0.0,
+        "high_prev_10": 0.0,
+        "mom_10": 0.0,
+        "vol_14": 0.0,
+        "ma_60": 0.0,
+        "ret_1": 0.0,
+        "ma_10": 0.0,
+        "mom_20": 0.0,
+        "std_5": 0.0,
+        "high_prev_20": 0.0,
+        "vol_5": 0.0,
+        "low_prev_5": 0.0,
+        "low_prev_20": 0.0
+      }
+    },
+    "momentum_float64_max_error": 1.1988348092017986e-06,
+    "factor_changes_exact": 13202,
+    "daily_top20_rank_exact": true,
+    "arrow_missing_equal": true,
+    "float64_reference": {
+      "ret_1": {
+        "max_absolute_error": 2.7939979774238566e-07,
+        "tolerance": 2e-05
+      },
+      "adv_20": {
+        "max_absolute_error": 4622.852005004883,
+        "tolerance": 131883.92192565752
+      },
+      "mom_5": {
+        "max_absolute_error": 3.7859282109309333e-07,
+        "tolerance": 2e-05
+      },
+      "ma_5": {
+        "max_absolute_error": 0.012085000009392388,
+        "tolerance": 0.29051642759999996
+      },
+      "std_5": {
+        "max_absolute_error": 0.0037140710435323854,
+        "tolerance": 0.026060176423985663
+      },
+      "vol_5": {
+        "max_absolute_error": 1.5133688707411053e-07,
+        "tolerance": 2e-05
+      },
+      "high_prev_5": {
+        "max_absolute_error": 0.007012500005657785,
+        "tolerance": 0.30758281319999997
+      },
+      "low_prev_5": {
+        "max_absolute_error": 0.007324999998672865,
+        "tolerance": 0.2784923832
+      },
+      "mom_10": {
+        "max_absolute_error": 4.81104156957457e-07,
+        "tolerance": 2e-05
+      },
+      "ma_10": {
+        "max_absolute_error": 0.014005000004544854,
+        "tolerance": 0.28890675713999997
+      },
+      "std_10": {
+        "max_absolute_error": 0.0025704755166771065,
+        "tolerance": 0.033338507117312295
+      },
+      "vol_10": {
+        "max_absolute_error": 1.1114757233338102e-07,
+        "tolerance": 2e-05
+      },
+      "high_prev_10": {
+        "max_absolute_error": 0.007012500005657785,
+        "tolerance": 0.30758281319999997
+      },
+      "low_prev_10": {
+        "max_absolute_error": 0.007324999998672865,
+        "tolerance": 0.27500153159999996
+      },
+      "mom_14": {
+        "max_absolute_error": 1.1988348092017986e-06,
+        "tolerance": 2.7566838046272494e-05
+      },
+      "ma_14": {
+        "max_absolute_error": 0.013460714282700792,
+        "tolerance": 0.28575113811428576
+      },
+      "std_14": {
+        "max_absolute_error": 0.0022646150141554244,
+        "tolerance": 0.033822389424547974
+      },
+      "vol_14": {
+        "max_absolute_error": 9.363488412926502e-08,
+        "tolerance": 2e-05
+      },
+      "high_prev_14": {
+        "max_absolute_error": 0.007012500005657785,
+        "tolerance": 0.30758281319999997
+      },
+      "low_prev_14": {
+        "max_absolute_error": 0.007324999998672865,
+        "tolerance": 0.2573533374
+      },
+      "mom_20": {
+        "max_absolute_error": 1.1988348092017986e-06,
+        "tolerance": 3.960154241645244e-05
+      },
+      "ma_20": {
+        "max_absolute_error": 0.012015000014798716,
+        "tolerance": 0.27523425504
+      },
+      "std_20": {
+        "max_absolute_error": 0.0019066044187638909,
+        "tolerance": 0.03692507051334516
+      },
+      "vol_20": {
+        "max_absolute_error": 7.595724662440295e-08,
+        "tolerance": 2e-05
+      },
+      "high_prev_20": {
+        "max_absolute_error": 0.006312500001513399,
+        "tolerance": 0.30758281319999997
+      },
+      "low_prev_20": {
+        "max_absolute_error": 0.007012500005657785,
+        "tolerance": 0.23291737620000003
+      },
+      "mom_60": {
+        "max_absolute_error": 1.3808538774640056e-06,
+        "tolerance": 4.793830334190232e-05
+      },
+      "ma_60": {
+        "max_absolute_error": 0.013449166668578982,
+        "tolerance": 0.24970901884999996
+      },
+      "std_60": {
+        "max_absolute_error": 0.0011478734813863412,
+        "tolerance": 0.04336063339608912
+      },
+      "vol_60": {
+        "max_absolute_error": 4.062749123234788e-08,
+        "tolerance": 2e-05
+      },
+      "high_prev_60": {
+        "max_absolute_error": 0.006074999997508712,
+        "tolerance": 0.30758281319999997
+      },
+      "low_prev_60": {
+        "max_absolute_error": 0.00623749999795109,
+        "tolerance": 0.2135237562
+      },
+      "rsi_14": {
+        "max_absolute_error": 0.00016969951802536798,
+        "tolerance": 0.001
+      }
+    },
+    "strategy_rank_precision": {
+      "momentum": {
+        "checked_days": 425,
+        "top20_equal": true
+      },
+      "reversal": {
+        "checked_days": 425,
+        "top20_equal": true
+      },
+      "low_volatility": {
+        "checked_days": 425,
+        "top20_equal": true
+      },
+      "liquidity": {
+        "checked_days": 425,
+        "top20_equal": true
+      }
+    },
+    "ten_strategy_signal_precision": {
+      "momentum": {
+        "checked_days": 425,
+        "target_decisions": 85,
+        "targets_equal": true
+      },
+      "liquidity": {
+        "checked_days": 425,
+        "target_decisions": 85,
+        "targets_equal": true
+      },
+      "buy_hold": {
+        "checked_days": 425,
+        "target_decisions": 1,
+        "targets_equal": true
+      },
+      "reversal": {
+        "checked_days": 425,
+        "target_decisions": 85,
+        "targets_equal": true
+      },
+      "moving_average": {
+        "checked_days": 425,
+        "target_decisions": 425,
+        "targets_equal": true
+      },
+      "breakout": {
+        "checked_days": 425,
+        "target_decisions": 425,
+        "targets_equal": true
+      },
+      "low_volatility": {
+        "checked_days": 425,
+        "target_decisions": 85,
+        "targets_equal": true
+      },
+      "rsi": {
+        "checked_days": 425,
+        "target_decisions": 425,
+        "targets_equal": true
+      },
+      "bollinger": {
+        "checked_days": 425,
+        "target_decisions": 425,
+        "targets_equal": true
+      },
+      "multifactor": {
+        "checked_days": 425,
+        "target_decisions": 85,
+        "targets_equal": true
+      }
+    }
+  },
+  "cuda_hardware": false,
+  "status_basis": "独立数值核对采用固定普通股票状态；正式回测另行审计历史 ST"
+}

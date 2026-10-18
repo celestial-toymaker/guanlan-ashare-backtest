@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "run_id": "report-5dr",
+  "ui_metrics": [
+    "-4,525.07 万元",
+    "-4.53%",
+    "9.17%",
+    "8.06%"
+  ],
+  "navigation_pages": 6,
+  "page_errors": [],
+  "screenshots": [
+    "work/screenshots/5dr-workbench.png",
+    "work/screenshots/5dr-report.png"
+  ]
+}

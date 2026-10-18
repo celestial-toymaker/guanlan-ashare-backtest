@@ -1,0 +1,154 @@
+{
+  "profile": {
+    "dates": {
+      "first_loaded": "2024-01-02",
+      "last_loaded": "2026-09-30",
+      "start": "2025-01-02",
+      "end": "2026-09-30",
+      "trading_days": 424
+    },
+    "securities": 5451,
+    "stocks": 5450,
+    "shape": [
+      666,
+      5451
+    ],
+    "fields": {
+      "open": {
+        "missing": 201561,
+        "infinite": 0,
+        "zero": 0,
+        "negative": 0
+      },
+      "high": {
+        "missing": 201561,
+        "infinite": 0,
+        "zero": 0,
+        "negative": 0
+      },
+      "low": {
+        "missing": 201561,
+        "infinite": 0,
+        "zero": 0,
+        "negative": 0
+      },
+      "close": {
+        "missing": 201561,
+        "infinite": 0,
+        "zero": 0,
+        "negative": 0
+      },
+      "amt": {
+        "missing": 201561,
+        "infinite": 0,
+        "zero": 8288,
+        "negative": 0
+      },
+      "num_trades": {
+        "missing": 201592,
+        "infinite": 0,
+        "zero": 8255,
+        "negative": 0
+      },
+      "cumadj": {
+        "missing": 201561,
+        "infinite": 0,
+        "zero": 0,
+        "negative": 0
+      }
+    },
+    "diagnostics": {
+      "valid_ohlc": 3428805,
+      "zero_amount": 8288,
+      "invalid_ohlc": 0,
+      "factor_change": 13202,
+      "small_factor_change": 2
+    },
+    "fingerprint": "e4bb3556203b55264d5bf27c750d45ca8ac8a990cb095dcb7bdebcc1a18e6d44",
+    "source_files": [
+      {
+        "metric": "open",
+        "file": "/Users/peter/回测/feathers/open.feather",
+        "size_bytes": 32297546,
+        "sha256": "a75e7aa3dac9e101f2c3cfff85728b26a29ea50ccc6ec46c315a36e8476d5f92",
+        "loaded_rows": 666,
+        "loaded_columns": 5451
+      },
+      {
+        "metric": "high",
+        "file": "/Users/peter/回测/feathers/high.feather",
+        "size_bytes": 32377890,
+        "sha256": "88313810bedab563416c94e90a60cc0cf089fd62923be1bcad0e2680558a5cf7",
+        "loaded_rows": 666,
+        "loaded_columns": 5451
+      },
+      {
+        "metric": "low",
+        "file": "/Users/peter/回测/feathers/low.feather",
+        "size_bytes": 32156250,
+        "sha256": "e5c7da4b6fcdae3cc50fe2f6d30faf36b83c68c25d6db5faba079716748fa8ea",
+        "loaded_rows": 666,
+        "loaded_columns": 5451
+      },
+      {
+        "metric": "close",
+        "file": "/Users/peter/回测/feathers/close.feather",
+        "size_bytes": 32431858,
+        "sha256": "621b7b381f96c7d162317ac67c8831aebfc5e78f4b1ecd59159fc93e0ea109e7",
+        "loaded_rows": 666,
+        "loaded_columns": 5451
+      },
+      {
+        "metric": "amt",
+        "file": "/Users/peter/回测/feathers/amt.feather",
+        "size_bytes": 52398330,
+        "sha256": "cd2a2f43e273963f93230163813aafaddb52307d1805ee1a583aeab931e418c2",
+        "loaded_rows": 666,
+        "loaded_columns": 5451
+      },
+      {
+        "metric": "num_trades",
+        "file": "/Users/peter/回测/feathers/num_trades.feather",
+        "size_bytes": 37495202,
+        "sha256": "37a89a5b9af8a00deafc089be614f7784167ae283277337f31552c809f28a142",
+        "loaded_rows": 666,
+        "loaded_columns": 5451
+      },
+      {
+        "metric": "cumadj",
+        "file": "/Users/peter/回测/feathers/cumadj.feather",
+        "size_bytes": 5877058,
+        "sha256": "5ebc13623115743c39b2cb56dbe365f10c4c72d6fed6ac4041d9377895439173",
+        "loaded_rows": 666,
+        "loaded_columns": 5451
+      }
+    ]
+  },
+  "compute": {
+    "device": "mps",
+    "device_name": "Apple M3 Pro",
+    "torch": "2.5.1",
+    "cuda": null,
+    "dtype": "float32",
+    "block_days": 128,
+    "windows": [
+      5,
+      10,
+      14,
+      20,
+      60
+    ],
+    "cache_key": "0b08e0535951f9be4537ddd403b65b032564fa08332576ed1f9aced8bb179551",
+    "cache_hit": true,
+    "seconds": 1.594
+  },
+  "status": {
+    "required_stock_days": 2155920,
+    "covered_stock_days": 2155920,
+    "unknown_stock_days": 0,
+    "unknown_examples": [],
+    "st_stock_days": 64273,
+    "source_fingerprint": "836ff2bb30f416ea1d05277ced05819dd565629f3d6f3ea0ca223c84a97405a4",
+    "availability_basis": "逐日风险状态按当日开盘前生效推定；有明确时间的覆盖事件按其可获知时间执行"
+  }
+}

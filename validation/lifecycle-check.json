@@ -1,0 +1,17 @@
+{
+  "running_cancel": {
+    "id": "20261017-045745-b277a821",
+    "stage_at_request": "backtest",
+    "status": "cancelled"
+  },
+  "failure": {
+    "id": "20261017-045816-81c5e80f",
+    "status": "failed",
+    "message": "请检查 CUDA 的硬件访问、驱动及 PyTorch 安装"
+  },
+  "empty": {
+    "id": "20261017-045819-6d7ef480",
+    "status": "completed",
+    "trade_count": 0
+  }
+}

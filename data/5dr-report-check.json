@@ -1,0 +1,90 @@
+{
+  "passed": true,
+  "run_id": "report-5dr",
+  "strategy": "5DR（5 日反转）",
+  "ranking": "5 日复权收益从低到高，同分按证券代码",
+  "baseline": "runs/full-reversal",
+  "device": "mps",
+  "trading_days": 424,
+  "tables": [
+    {
+      "table": "orders",
+      "rows": 17818,
+      "identical": true
+    },
+    {
+      "table": "trades",
+      "rows": 3044,
+      "identical": true
+    },
+    {
+      "table": "journal",
+      "rows": 84523,
+      "identical": true
+    },
+    {
+      "table": "equity",
+      "rows": 424,
+      "identical": true
+    },
+    {
+      "table": "positions",
+      "rows": 8416,
+      "identical": true
+    },
+    {
+      "table": "fees",
+      "rows": 10966,
+      "identical": true
+    },
+    {
+      "table": "exits",
+      "rows": 8451,
+      "identical": true
+    },
+    {
+      "table": "universe",
+      "rows": 425,
+      "identical": true
+    },
+    {
+      "table": "selection",
+      "rows": 2316675,
+      "identical": true
+    },
+    {
+      "table": "benchmark_equity",
+      "rows": 424,
+      "identical": true
+    }
+  ],
+  "config_sha256": "407cc4cf2fa82bedf2c29a55db20a309d75126abba2366c7f538b6d7d75705e2",
+  "report_sha256": "9a59ec056766129e963dd7e8e77b844f38b87f3162917cd5bd6fbce5049bf355",
+  "source_sha256": {
+    "__init__.py": "d8b68ddf538de90ee92879416fe3a1c0188b0c965fa754a5e48ba89e5b836f85",
+    "analytics.py": "9b384da0bf236ec5fde29362178ecad77570fbd97b28b88632c131abf6e4d12f",
+    "cli.py": "50e79940cc48b02f6e28a7b3f61dc24b14c497d97e0d1c3fb590955c71c49172",
+    "compute.py": "13b9bc449c0deed864e13311bfc9b18174efdf0c607f087ae63c3fa328174134",
+    "config.py": "7250ca8633377bb76a958f7a2ebd80287c7a809bad5ca1d9b7f4a4c13b88e28d",
+    "data.py": "e74f01531a15772de9b8740cb42aad5f1bbb3738d331c9efd6f2117312d4e0b1",
+    "diagnostics.py": "04c3b5f100d8eb7ac648a650f0b18d9df063abd92f068acbee74d317d2df50ae",
+    "engine.py": "b0205b369e2d82c0530724e6e07a91c1fd2ff65632c3be191be7ed7e7fcd0239",
+    "events.py": "698191219d7d5268180004783102029c5d7a5f5e0643090ef50b7741756b72ac",
+    "execution.py": "10017d7f65b7ca079ae6d2d13be388f3a92da3e767f11c49d2abd85a813f0fc6",
+    "extensions.py": "24056888804ad6251c23b7d883e129ff7b3e423af283caf6461c3eca12511804",
+    "ledger.py": "947055611662bb1f562b4a39ca0db4eee89f659051a5bc1073d5f5e1011d3d31",
+    "rules.py": "d6ae09ac09eb4a16e8825ced598c32836bbe601f7c212ecc6b4e0d0b67eed899",
+    "server.py": "0b265b1a58df96532c451ebc9e8ed06b5d2ef115f5d51ca19072633bb72dbad3",
+    "status.py": "d785b30749cc0af4a928c973056bfe91d3bf759dbbc517373ade13fdd787cb26",
+    "strategies.py": "675be3f50a2732855bd177d711bc16d63f179b45b9ec99a8938d6aad3810f2ed",
+    "utils.py": "a47d7864ef8c096efeb0c609620b92aa0a3d9b0c7a6537a27f79ed794958ff65",
+    "worker.py": "0899b0fae583ff09770cfbb693a3c0a8aea33f6bb6e4bf00a367d6eb6e0f5441"
+  },
+  "application_publication_changes": {
+    "server.py": {
+      "run_sha256": "0b265b1a58df96532c451ebc9e8ed06b5d2ef115f5d51ca19072633bb72dbad3",
+      "publication_sha256": "6719a3f6f61e8f1b062697347339a252aa3bc9b2951bb69ac8a1d6e56f76cd32"
+    }
+  },
+  "financial_source_matches": true
+}
