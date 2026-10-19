@@ -22,7 +22,9 @@ def test_saved_run_ui_cli_tables_and_trade_explanation(market):
     assert sum(float(r['amount']) for r in detail['journal'])==0
     report=client.get('/api/runs/api-example/file/report.md')
     assert report.status_code==200 and '# ' in report.text and '事后规划' in report.text
-    assert client.get('/api/runs/api-example/file/equity-curve.svg').status_code==200
+    image=client.get('/api/runs/api-example/file/equity-curve.png')
+    assert image.status_code==200 and image.headers['content-type']=='image/png'
+    assert image.content.startswith(bytes.fromhex('89504e470d0a1a0a'))
 
 
 def test_job_queue_persistence_cancel_and_local_origin(tmp_path):

@@ -30,7 +30,7 @@
 
 例如，某只股票持有 500 股，倒数第二个开盘实际可卖 1,000 股，最后一个开盘因容量下降只能卖 100 股，退出会在倒数第二个开盘启动。这个例子展示倒排规则，正式运行逐证券保存实际路径。
 
-[Markdown 中文报告](report.md)包含完整资金曲线、成本、状态覆盖和研究假设。可在 GitHub 或 Markdown 阅读器中打开，资金曲线位于同目录。[账户净值 CSV](equity.csv)和[参考净值 CSV](benchmark_equity.csv)提供聚合曲线；精确金额和配置见 [summary.json](summary.json) 与 [config.json](config.json)。
+[Markdown 中文报告](report.md)包含完整资金曲线、成本、状态覆盖和研究假设。可在 GitHub 或 Markdown 阅读器中打开，资金曲线为同目录的 [PNG 图片](equity-curve.png)。[账户净值 CSV](equity.csv)和[参考净值 CSV](benchmark_equity.csv)提供聚合曲线；精确金额和配置见 [summary.json](summary.json) 与 [config.json](config.json)。
 
 ![5DR 中文报告](../../docs/images/5dr-report.png)
 
@@ -65,7 +65,8 @@
 - [退出验收](../../data/actual-exit-check.json)：逐日开盘价、共享容量、时间范围与期末结清核对。
 - [策略实现](../../src/ashare_bt/strategies.py)：`BuiltinStrategy.score`、`refine_ranking` 与 `raw_scores`。
 - [结果清单](manifest.json)：设备、依赖、数据及状态指纹、应用源码哈希。
+- [PNG 图片核对](../../data/png-report-check.json)：图片尺寸、每日曲线及报告刷新前后的财务结果一致性。
 - [5DR 核对](../../data/5dr-report-check.json)：完整 424 日重算，十张表与已验收的 5 日反转运行逐项一致。
 - [课程讨论](https://github.com/aslan9/pku_quantllm/issues/8#issuecomment-6215092680)：5DR 的正向和反转用法；本报告采用反转方向，并使用本项目的资金、费用和执行规则。
 
-公开报告保存聚合结果与运行时源码哈希；本地运行的订单、成交、借贷分录、证券池及逐日选股保存在 `runs/<运行编号>`。财务与策略实现按来源清单核对，工作台服务与界面的发布整理另行测试。历史状态、当日复权因子和成交额的研究假设见 Markdown 报告的“结果的解释边界”。
+公开报告保存聚合结果与运行时源码哈希；本地运行的订单、成交、借贷分录、证券池及逐日选股保存在 `runs/<运行编号>`。财务与策略实现按来源清单核对，工作台服务与界面的发布整理另行测试。历史状态、当日复权因子和成交额的研究假设见 Markdown 报告的“数据与研究假设”。

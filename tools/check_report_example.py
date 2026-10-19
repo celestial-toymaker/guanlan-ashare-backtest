@@ -48,7 +48,12 @@ def check():
     markdown = (directory / 'report.md').read_text()
     assert '退出方式与后续行情使用范围' in markdown and '事后规划' in markdown and '新增买入' in markdown
     assert markdown.startswith('# 5DR') and '5 日反转' in markdown
-    assert '![策略与参考组合的累计收益曲线](equity-curve.svg)' in markdown
+    assert '![策略与参考组合的累计收益曲线](equity-curve.png)' in markdown
+    from PIL import Image
+    with Image.open(directory/'equity-curve.png') as image:
+        assert image.format=='PNG' and image.size==(1880,580)
+        image.verify()
+    assert manifest['report']['chart_sha256']==sha256(directory/'equity-curve.png')
     assert f'{summary["return"]:.2%}' in markdown
     assert f'{summary["max_drawdown"]:.2%}' in markdown
     assert f'{float(summary["net_profit"]):,.2f}' in markdown

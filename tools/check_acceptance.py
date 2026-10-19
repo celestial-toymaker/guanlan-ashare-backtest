@@ -135,7 +135,14 @@ def check():
     assert lifecycle['passed']
     replay=json.loads((ROOT/'work/full-replay-check.json').read_text())
     assert replay['passed']
-    assert replay['source_sha256']==json.loads((ROOT/'runs/full-momentum/manifest.json').read_text())['source_sha256']
+    replay_manifest=json.loads((ROOT/'runs/full-momentum/manifest.json').read_text())
+    publication_source=replay_manifest['source_sha256']
+    if replay['source_sha256']!=publication_source:
+        assert replay['source_sha256'] in replay_manifest.get('report_source_history',[])
+        assert replay_manifest['report_refresh']['verified_statistics_unchanged']
+        assert all(digest==publication_source[name] for name,digest in replay['source_sha256'].items() if name not in {'analytics.py','server.py','cli.py'})
+        replay={**replay,'publication_report_source_sha256':publication_source,
+                'report_refresh_basis':'重放保留执行时源码哈希；本次图片渲染更新已核对财务模块与统计函数一致'}
     web=json.loads((ROOT/'web/package.json').read_text())
     report={'passed':True,'period':{'start':days[0],'end':days[-1],'trading_days':424,'first_decision':'2024-12-31'},
             'strategies':reports,'python_tests':int(tests['tests']),'browser_tests':browser['expected'],

@@ -79,12 +79,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2075,
+                  "duration": 2175,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T21:15:14.028Z",
+                  "startTime": "2026-10-19T02:24:22.746Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -113,12 +113,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 714,
+                  "duration": 739,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T21:15:16.195Z",
+                  "startTime": "2026-10-19T02:24:25.128Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -128,7 +128,7 @@
           ],
           "id": "921e070f285a8b470d11-49cd92a952fe4afa2e83",
           "file": "workbench.spec.ts",
-          "line": 52,
+          "line": 56,
           "column": 1
         },
         {
@@ -147,12 +147,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 32,
+                  "duration": 36,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T21:15:16.915Z",
+                  "startTime": "2026-10-19T02:24:25.880Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -162,7 +162,7 @@
           ],
           "id": "921e070f285a8b470d11-c5e2ce6ae1778c6a0a28",
           "file": "workbench.spec.ts",
-          "line": 66,
+          "line": 70,
           "column": 1
         }
       ]
@@ -170,8 +170,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-18T21:15:13.639Z",
-    "duration": 3342.304,
+    "startTime": "2026-10-19T02:24:22.403Z",
+    "duration": 3542.464,
     "expected": 3,
     "skipped": 0,
     "unexpected": 0,

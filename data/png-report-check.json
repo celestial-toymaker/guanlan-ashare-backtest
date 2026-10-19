@@ -1,0 +1,124 @@
+{
+  "passed": true,
+  "format": "png",
+  "renderer": "Matplotlib Agg",
+  "financial_files_checked": 297,
+  "render_cases": [
+    "逐日原始净值",
+    "按日期对齐参考组合",
+    "单曲线",
+    "零交易的平坦净值"
+  ],
+  "reports": [
+    {
+      "run_id": "full-bollinger",
+      "chart_sha256": "829043c5ede22d4e41c80e5d4a2bb6ed86e7d79b8780d550cca26a1aec01fced",
+      "size": [
+        1880,
+        580
+      ],
+      "daily_points": 424,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-breakout",
+      "chart_sha256": "c112bcc861c971201cc62e7c737dfd150c0cc80c91bd5a2ae921fd4dc0e3e0ce",
+      "size": [
+        1880,
+        580
+      ],
+      "daily_points": 424,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-buy-hold",
+      "chart_sha256": "d755bc2e35cb84a7679397bbdc8d5071cd035253d947c169989502a38e92706c",
+      "size": [
+        1880,
+        580
+      ],
+      "daily_points": 424,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-liquidity",
+      "chart_sha256": "b2117e85dc6cdc9542ba2b1239905aad1f15111ccbd43d26fdf06a9bd7b8b113",
+      "size": [
+        1880,
+        580
+      ],
+      "daily_points": 424,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-low-volatility",
+      "chart_sha256": "d5f61c62f4f773812d1c115cdb3052147cbe96d89cfc1a48c4584a2167df272c",
+      "size": [
+        1880,
+        580
+      ],
+      "daily_points": 424,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-momentum",
+      "chart_sha256": "7296335087a154c82f5be52067002718b4c9d0707d69f3c96d94861a005039d0",
+      "size": [
+        1880,
+        580
+      ],
+      "daily_points": 424,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-moving-average",
+      "chart_sha256": "3d3404f384fb7c6ca624dbcfec1afb72c021a267ca6b4e1ddad96485f33cf66f",
+      "size": [
+        1880,
+        580
+      ],
+      "daily_points": 424,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-multifactor",
+      "chart_sha256": "f51754e1f62649367d0f421b6636f9d8e81eaffd702af4db2de77f388dc84c62",
+      "size": [
+        1880,
+        580
+      ],
+      "daily_points": 424,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-reversal",
+      "chart_sha256": "0bee37165c44fd7133b8ed1303e63c4dc20b4251c780f91f26a7c6ba9451be4d",
+      "size": [
+        1880,
+        580
+      ],
+      "daily_points": 424,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-rsi",
+      "chart_sha256": "34fc63e5a08e3092db5e72d76ad53add42f0adb8ccfaaaf5c77ab653a59c1cad",
+      "size": [
+        1880,
+        580
+      ],
+      "daily_points": 424,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "report-5dr",
+      "chart_sha256": "0bee37165c44fd7133b8ed1303e63c4dc20b4251c780f91f26a7c6ba9451be4d",
+      "size": [
+        1880,
+        580
+      ],
+      "daily_points": 424,
+      "financial_files_unchanged": true
+    }
+  ]
+}

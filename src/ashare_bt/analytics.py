@@ -76,20 +76,69 @@ def summarize(config, tables, coverage, device, reference, extra):
     return summary
 
 
-def chart_svg(equity, reference=None):
-    values = equity.unit_nav.to_numpy(float)
-    series = [values] + ([reference.unit_nav.to_numpy(float)] if reference is not None else [])
-    lower = min(float(np.min(s)) for s in series + [np.array([1.])])
-    upper = max(float(np.max(s)) for s in series + [np.array([1.])])
-    span = max(upper - lower, .01)
-    y = lambda value: 240 - (value - lower) / span * 210
-    points = lambda s: " ".join(f"{50 + i * 850 / max(1, len(s)-1):.2f},{y(v):.2f}" for i,v in enumerate(s))
-    grid = "".join(f'<line x1="50" x2="900" y1="{y(v):.2f}" y2="{y(v):.2f}" stroke="#e8edf5"/><text x="5" y="{y(v)+4:.2f}" font-size="12" fill="#77849c">{(v-1)*100:.1f}%</text>' for v in np.linspace(lower, upper, 5))
-    lines = ""
-    for i, (series_values, color) in enumerate(zip(series, ["#315ee8", "#98a6c0"])):
-        dash = 'stroke-dasharray="5,5"' if i else ""
-        lines += f'<polyline points="{points(series_values)}" fill="none" stroke="{color}" stroke-width="{3 if i == 0 else 1.8}" {dash}/>'
-    return f'<svg xmlns="http://www.w3.org/2000/svg" width="940" height="290" viewBox="0 0 940 290" role="img" aria-label="策略与参考组合累计收益曲线">{grid}{lines}<text x="50" y="278" font-size="12" fill="#77849c">{equity.date.iloc[0]}</text><text x="820" y="278" font-size="12" fill="#77849c">{equity.date.iloc[-1]}</text></svg>'
+def chart_png(directory, equity, reference=None):
+    """以已保存的逐日净值绘制 PNG；中文说明与 Markdown 报告配套。"""
+    from pathlib import Path
+    from matplotlib.backends.backend_agg import FigureCanvasAgg
+    from matplotlib.figure import Figure
+    from matplotlib.font_manager import FontProperties, fontManager
+    from matplotlib.ticker import FuncFormatter
+    from matplotlib import dates as mdates
+
+    if equity.empty:
+        raise ValueError("资金曲线需要至少一个净值日期")
+    dates = np.array(equity.date, dtype="datetime64[D]")
+    values = (equity.unit_nav.to_numpy(float) - 1) * 100
+    reference_values = None
+    if reference is not None:
+        reference_values = (reference.set_index("date").unit_nav.reindex(equity.date).to_numpy(float) - 1) * 100
+    figure = Figure(figsize=(11.75, 3.625), dpi=160, facecolor="white")
+    canvas = FigureCanvasAgg(figure)
+    axis = figure.add_subplot(111)
+    axis.set_facecolor("white")
+    font = None
+    mac_font = Path("/System/Library/Fonts/Supplemental/Arial Unicode.ttf")
+    if mac_font.exists():
+        font = FontProperties(fname=str(mac_font), size=9)
+    else:
+        installed = {record.name for record in fontManager.ttflist}
+        for family in ("Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", "WenQuanYi Zen Hei"):
+            if family in installed:
+                font = FontProperties(family=family, size=9)
+                break
+    axis.plot(dates, values, color="#315ee8", linewidth=1.8, label="策略" if font else "Strategy")
+    if reference_values is not None:
+        axis.plot(dates, reference_values, color="#98a6c0", linewidth=1.3,
+                  linestyle=(0, (4, 3)), label="参考组合" if font else "Reference")
+    finite = np.r_[0., values[np.isfinite(values)],
+                   reference_values[np.isfinite(reference_values)] if reference_values is not None else []]
+    lower, upper = float(finite.min()), float(finite.max())
+    padding = max((upper - lower) * .12, .5)
+    axis.set_ylim(lower - padding, upper + padding)
+    axis.axhline(0, color="#dbe1ed", linewidth=.8, zorder=0)
+    axis.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value:g}%"))
+    ticks = np.unique(np.linspace(0, len(dates) - 1, min(6, len(dates)), dtype=int))
+    axis.set_xticks(dates[ticks])
+    axis.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
+    labels = axis.get_xticklabels()
+    labels[0].set_horizontalalignment("left")
+    if len(labels) > 1:
+        labels[-1].set_horizontalalignment("right")
+    if len(dates) > 1:
+        axis.set_xlim(dates[0], dates[-1])
+    axis.grid(axis="y", color="#e8edf5", linewidth=.8)
+    axis.set_axisbelow(True)
+    axis.tick_params(axis="both", labelsize=8, colors="#77849c", length=0, pad=8)
+    for spine in axis.spines.values():
+        spine.set_visible(False)
+    axis.legend(loc="upper left", frameon=False, prop=font or FontProperties(size=9), ncol=2)
+    figure.subplots_adjust(left=.07, right=.985, bottom=.15, top=.92)
+    path = Path(directory) / "equity-curve.png"
+    try:
+        canvas.print_png(path, metadata={"Software": "ashare_bt"})
+    finally:
+        figure.clear()
+    return path
 
 
 def write_report(directory, summary, equity, reference=None):
@@ -137,7 +186,7 @@ def write_report(directory, summary, equity, reference=None):
 
 ## 3. 资金曲线
 
-![策略与参考组合的累计收益曲线](equity-curve.svg)
+![策略与参考组合的累计收益曲线](equity-curve.png)
 
 蓝线表示本次策略，灰色虚线表示首次动量篮子买入持有的参考组合；两者使用相同初始资金、费用和退出方式。收益曲线按份额计量，入出金另行记录。聚合曲线见 [账户净值 CSV](equity.csv) 与 [参考净值 CSV](benchmark_equity.csv)。
 
@@ -204,13 +253,14 @@ def write_report(directory, summary, equity, reference=None):
         text = text.replace(' 与 [参考净值 CSV](benchmark_equity.csv)', '')
         text = text.replace('蓝线表示本次策略，灰色虚线表示首次动量篮子买入持有的参考组合；两者使用相同初始资金、费用和退出方式。', '蓝线表示本次策略。')
     (directory / 'report.md').write_text(text, encoding='utf-8')
-    (directory / 'equity-curve.svg').write_text(chart_svg(equity, reference), encoding='utf-8')
+    image_path = chart_png(directory, equity, reference)
     packages = {}
-    for name in ("numpy","pandas","pyarrow","torch","fastapi","baostock"):
+    for name in ("numpy","pandas","pyarrow","torch","fastapi","baostock","matplotlib"):
         packages[name] = version(name)
     source_root = __import__("pathlib").Path(__file__).parent
     manifest = {"python": sys.version, "platform": f"{platform.system()} {platform.release()} {platform.machine()}", "dependencies": packages,
-                "report": {"format": "markdown", "document": "report.md", "chart": "equity-curve.svg"},
+                "report": {"format": "markdown", "document": "report.md", "chart": "equity-curve.png",
+                           "chart_format": "png", "chart_size": [1880, 580], "chart_sha256": sha256(image_path)},
                 "compute": s["compute"], "exit_planning": s["exit_planning"], "data_fingerprint": s["input_fingerprint"],
                 "status_fingerprint": s["status_fingerprint"], "ranges": {"warmup": s["warmup"],"start":s["start"],"end":s["end"],"days":s["trading_days"]},
                 "source_sha256": {p.name: sha256(p) for p in sorted(source_root.glob("*.py"))}}

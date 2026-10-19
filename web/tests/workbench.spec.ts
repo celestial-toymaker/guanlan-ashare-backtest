@@ -17,6 +17,10 @@ test('实际结果、选股、交易解释、退出与设置', async ({page}) =>
   const report=await page.request.get('/api/runs/full-momentum/file/report.md');
   expect(report.status()).toBe(200);
   expect(await report.text()).toContain('后续行情使用范围');
+  expect(await report.text()).toContain('](equity-curve.png)');
+  const curve=await page.request.get('/api/runs/full-momentum/file/equity-curve.png');
+  expect(curve.status()).toBe(200);
+  expect(curve.headers()['content-type']).toBe('image/png');
   await page.mouse.move(0,0);
   await expect(page.locator('.period-strip .hint-bubble')).toBeHidden();
   await page.screenshot({path:`${shots}/desktop-overview.png`,fullPage:true});

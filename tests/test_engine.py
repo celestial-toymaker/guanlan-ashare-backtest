@@ -44,8 +44,10 @@ def test_exit_modes_and_reports(market,mode):
     config.exit_mode = mode
     result = run(config,data=data,features=features,status=status,run_id=mode)
     assert (result.run_dir / "report.md").exists()
-    from xml.etree import ElementTree
-    assert ElementTree.parse(result.run_dir / "equity-curve.svg").getroot().tag == "{http://www.w3.org/2000/svg}svg"
+    from PIL import Image
+    with Image.open(result.run_dir / "equity-curve.png") as image:
+        assert image.format == "PNG" and image.size == (1880, 580)
+        image.verify()
     assert (result.run_dir / "manifest.json").exists()
     assert Decimal(result.summary["ending_market_value"]) == 0
 
