@@ -35,3 +35,21 @@ def test_job_queue_persistence_cancel_and_local_origin(tmp_path):
     assert client.post('/api/runs/'+job['id']+'/cancel').status_code==200
     assert client.get('/api/runs').json()[0]['status']=='cancelled'
     assert client.post('/api/runs',json={},headers={'Origin':'https://example.com'}).status_code==403
+
+
+def test_current_api_normalizes_historical_config_and_exposes_strategy_results(market):
+    import json
+    config,data,features,status=market
+    result=run(config,data=data,features=features,status=status,run_id='historical-api')
+    path=result.run_dir/'summary.json';saved=json.loads(path.read_text())
+    saved['config']['benchmark']=True;saved['benchmark_return']=.12;saved['benchmark_ending_nav']='1120000'
+    path.write_text(json.dumps(saved))
+    (result.run_dir/'benchmark_equity.csv').write_text('date,unit_nav\n2025-01-02,1\n')
+    client=TestClient(create_app(config.root))
+    summary=client.get('/api/runs/historical-api').json()['summary']
+    assert 'benchmark' not in summary['config']
+    assert not any(key.startswith('benchmark_') for key in summary)
+    assert client.get('/api/runs/historical-api/table/benchmark_equity').status_code==404
+    assert client.get('/api/runs/historical-api/file/benchmark_equity.csv').status_code==404
+    job=client.post('/api/runs',json={'name':'历史配置续跑','benchmark':True}).json()
+    assert job['status']=='queued' and 'benchmark' not in job['config']

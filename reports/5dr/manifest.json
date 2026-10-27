@@ -19,7 +19,7 @@
       1880,
       580
     ],
-    "chart_sha256": "0bee37165c44fd7133b8ed1303e63c4dc20b4251c780f91f26a7c6ba9451be4d"
+    "chart_sha256": "835aa0bb7072cf7317ea9583b42486dd266de3a675809bb8305f212f358f9cc8"
   },
   "compute": {
     "device": "mps",
@@ -36,8 +36,8 @@
       60
     ],
     "cache_key": "0b08e0535951f9be4537ddd403b65b032564fa08332576ed1f9aced8bb179551",
-    "cache_hit": true,
-    "seconds": 1.594
+    "cache_hit": false,
+    "seconds": 2.044
   },
   "exit_planning": {
     "basis": "actual_path",
@@ -60,24 +60,24 @@
   },
   "source_sha256": {
     "__init__.py": "d8b68ddf538de90ee92879416fe3a1c0188b0c965fa754a5e48ba89e5b836f85",
-    "analytics.py": "c2b9b35f958b767bdc7d8fa3f9d76876b3f7f1b3bec7ac2fcd5f94d627712d5f",
+    "analytics.py": "978fcf260a8f8ab4f1f545d26f7f479d93bd0984cd58376ce2cc14ed027f784f",
     "cli.py": "e9831f0e28bd7710c05a843b699abfddf361a23ea26aadcc61db79c39c1335aa",
     "compute.py": "13b9bc449c0deed864e13311bfc9b18174efdf0c607f087ae63c3fa328174134",
-    "config.py": "7250ca8633377bb76a958f7a2ebd80287c7a809bad5ca1d9b7f4a4c13b88e28d",
+    "config.py": "bfb9af7c9a5579de8a9e0cf7a7c0f567cf0b768ab17420acf4604c157cbda27c",
     "data.py": "e74f01531a15772de9b8740cb42aad5f1bbb3738d331c9efd6f2117312d4e0b1",
     "diagnostics.py": "04c3b5f100d8eb7ac648a650f0b18d9df063abd92f068acbee74d317d2df50ae",
-    "engine.py": "b27f78d095e448d15ea7a9e6fb334e4dccdeb78bb158de7b542f1a4af9cdaad9",
+    "engine.py": "27d315f53d1cf0a0f0832670b8cf53c49df11bb6cce117a0b6e8ab79c3535bf1",
     "events.py": "698191219d7d5268180004783102029c5d7a5f5e0643090ef50b7741756b72ac",
     "execution.py": "a13f7df22c35a4584c3081bd975148174a9a68f45d08544ab63c8ab929b7c7b9",
     "exit_path.py": "212210ce7a1ea962bc7791b25f8c2f00a8284dd131f170e16493a2406d793d31",
     "extensions.py": "24056888804ad6251c23b7d883e129ff7b3e423af283caf6461c3eca12511804",
     "ledger.py": "947055611662bb1f562b4a39ca0db4eee89f659051a5bc1073d5f5e1011d3d31",
     "rules.py": "d6ae09ac09eb4a16e8825ced598c32836bbe601f7c212ecc6b4e0d0b67eed899",
-    "server.py": "b27e76d60415d9f4d184793db16dd009f2955bac8da8c313f93a7db6293588de",
+    "server.py": "04b6b373987cb2bbecc26ff383d76ebee0343d75c23bb5b9d4b37fba2ac54404",
     "status.py": "d785b30749cc0af4a928c973056bfe91d3bf759dbbc517373ade13fdd787cb26",
-    "strategies.py": "675be3f50a2732855bd177d711bc16d63f179b45b9ec99a8938d6aad3810f2ed",
+    "strategies.py": "4d2fe589eddb7e942efa74098c423e26f9a8a89a626891a2e1f777f906fa6366",
     "utils.py": "a47d7864ef8c096efeb0c609620b92aa0a3d9b0c7a6537a27f79ed794958ff65",
-    "worker.py": "0899b0fae583ff09770cfbb693a3c0a8aea33f6bb6e4bf00a367d6eb6e0f5441"
+    "worker.py": "88a8ca9c86a3599708678b5bda4a330463f53e064b39926043f0397e516d5bab"
   },
   "upstream_sources": [
     {
@@ -410,95 +410,5 @@
       "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
       "bytes": 1141
     }
-  ],
-  "simulation_source_sha256": {
-    "__init__.py": "d8b68ddf538de90ee92879416fe3a1c0188b0c965fa754a5e48ba89e5b836f85",
-    "analytics.py": "7df1ea999e1ba54e660c8e35e68487499958985b75f14c437d0b863c055069e3",
-    "cli.py": "e9831f0e28bd7710c05a843b699abfddf361a23ea26aadcc61db79c39c1335aa",
-    "compute.py": "13b9bc449c0deed864e13311bfc9b18174efdf0c607f087ae63c3fa328174134",
-    "config.py": "7250ca8633377bb76a958f7a2ebd80287c7a809bad5ca1d9b7f4a4c13b88e28d",
-    "data.py": "e74f01531a15772de9b8740cb42aad5f1bbb3738d331c9efd6f2117312d4e0b1",
-    "diagnostics.py": "04c3b5f100d8eb7ac648a650f0b18d9df063abd92f068acbee74d317d2df50ae",
-    "engine.py": "b27f78d095e448d15ea7a9e6fb334e4dccdeb78bb158de7b542f1a4af9cdaad9",
-    "events.py": "698191219d7d5268180004783102029c5d7a5f5e0643090ef50b7741756b72ac",
-    "execution.py": "a13f7df22c35a4584c3081bd975148174a9a68f45d08544ab63c8ab929b7c7b9",
-    "exit_path.py": "212210ce7a1ea962bc7791b25f8c2f00a8284dd131f170e16493a2406d793d31",
-    "extensions.py": "24056888804ad6251c23b7d883e129ff7b3e423af283caf6461c3eca12511804",
-    "ledger.py": "947055611662bb1f562b4a39ca0db4eee89f659051a5bc1073d5f5e1011d3d31",
-    "rules.py": "d6ae09ac09eb4a16e8825ced598c32836bbe601f7c212ecc6b4e0d0b67eed899",
-    "server.py": "7ed274c75e0581894818960695c46e6f3ab057745a1d0dc5089b0ffdc3ebf8fb",
-    "status.py": "d785b30749cc0af4a928c973056bfe91d3bf759dbbc517373ade13fdd787cb26",
-    "strategies.py": "675be3f50a2732855bd177d711bc16d63f179b45b9ec99a8938d6aad3810f2ed",
-    "utils.py": "a47d7864ef8c096efeb0c609620b92aa0a3d9b0c7a6537a27f79ed794958ff65",
-    "worker.py": "0899b0fae583ff09770cfbb693a3c0a8aea33f6bb6e4bf00a367d6eb6e0f5441"
-  },
-  "report_source_history": [
-    {
-      "__init__.py": "d8b68ddf538de90ee92879416fe3a1c0188b0c965fa754a5e48ba89e5b836f85",
-      "analytics.py": "7df1ea999e1ba54e660c8e35e68487499958985b75f14c437d0b863c055069e3",
-      "cli.py": "e9831f0e28bd7710c05a843b699abfddf361a23ea26aadcc61db79c39c1335aa",
-      "compute.py": "13b9bc449c0deed864e13311bfc9b18174efdf0c607f087ae63c3fa328174134",
-      "config.py": "7250ca8633377bb76a958f7a2ebd80287c7a809bad5ca1d9b7f4a4c13b88e28d",
-      "data.py": "e74f01531a15772de9b8740cb42aad5f1bbb3738d331c9efd6f2117312d4e0b1",
-      "diagnostics.py": "04c3b5f100d8eb7ac648a650f0b18d9df063abd92f068acbee74d317d2df50ae",
-      "engine.py": "b27f78d095e448d15ea7a9e6fb334e4dccdeb78bb158de7b542f1a4af9cdaad9",
-      "events.py": "698191219d7d5268180004783102029c5d7a5f5e0643090ef50b7741756b72ac",
-      "execution.py": "a13f7df22c35a4584c3081bd975148174a9a68f45d08544ab63c8ab929b7c7b9",
-      "exit_path.py": "212210ce7a1ea962bc7791b25f8c2f00a8284dd131f170e16493a2406d793d31",
-      "extensions.py": "24056888804ad6251c23b7d883e129ff7b3e423af283caf6461c3eca12511804",
-      "ledger.py": "947055611662bb1f562b4a39ca0db4eee89f659051a5bc1073d5f5e1011d3d31",
-      "rules.py": "d6ae09ac09eb4a16e8825ced598c32836bbe601f7c212ecc6b4e0d0b67eed899",
-      "server.py": "7ed274c75e0581894818960695c46e6f3ab057745a1d0dc5089b0ffdc3ebf8fb",
-      "status.py": "d785b30749cc0af4a928c973056bfe91d3bf759dbbc517373ade13fdd787cb26",
-      "strategies.py": "675be3f50a2732855bd177d711bc16d63f179b45b9ec99a8938d6aad3810f2ed",
-      "utils.py": "a47d7864ef8c096efeb0c609620b92aa0a3d9b0c7a6537a27f79ed794958ff65",
-      "worker.py": "0899b0fae583ff09770cfbb693a3c0a8aea33f6bb6e4bf00a367d6eb6e0f5441"
-    },
-    {
-      "__init__.py": "d8b68ddf538de90ee92879416fe3a1c0188b0c965fa754a5e48ba89e5b836f85",
-      "analytics.py": "7431d78280dd8973eda907611efba54015d201cb3a3ddbc694d0398cfc9d06fa",
-      "cli.py": "e9831f0e28bd7710c05a843b699abfddf361a23ea26aadcc61db79c39c1335aa",
-      "compute.py": "13b9bc449c0deed864e13311bfc9b18174efdf0c607f087ae63c3fa328174134",
-      "config.py": "7250ca8633377bb76a958f7a2ebd80287c7a809bad5ca1d9b7f4a4c13b88e28d",
-      "data.py": "e74f01531a15772de9b8740cb42aad5f1bbb3738d331c9efd6f2117312d4e0b1",
-      "diagnostics.py": "04c3b5f100d8eb7ac648a650f0b18d9df063abd92f068acbee74d317d2df50ae",
-      "engine.py": "b27f78d095e448d15ea7a9e6fb334e4dccdeb78bb158de7b542f1a4af9cdaad9",
-      "events.py": "698191219d7d5268180004783102029c5d7a5f5e0643090ef50b7741756b72ac",
-      "execution.py": "a13f7df22c35a4584c3081bd975148174a9a68f45d08544ab63c8ab929b7c7b9",
-      "exit_path.py": "212210ce7a1ea962bc7791b25f8c2f00a8284dd131f170e16493a2406d793d31",
-      "extensions.py": "24056888804ad6251c23b7d883e129ff7b3e423af283caf6461c3eca12511804",
-      "ledger.py": "947055611662bb1f562b4a39ca0db4eee89f659051a5bc1073d5f5e1011d3d31",
-      "rules.py": "d6ae09ac09eb4a16e8825ced598c32836bbe601f7c212ecc6b4e0d0b67eed899",
-      "server.py": "b27e76d60415d9f4d184793db16dd009f2955bac8da8c313f93a7db6293588de",
-      "status.py": "d785b30749cc0af4a928c973056bfe91d3bf759dbbc517373ade13fdd787cb26",
-      "strategies.py": "675be3f50a2732855bd177d711bc16d63f179b45b9ec99a8938d6aad3810f2ed",
-      "utils.py": "a47d7864ef8c096efeb0c609620b92aa0a3d9b0c7a6537a27f79ed794958ff65",
-      "worker.py": "0899b0fae583ff09770cfbb693a3c0a8aea33f6bb6e4bf00a367d6eb6e0f5441"
-    }
-  ],
-  "report_refresh": {
-    "format": "markdown",
-    "chart_format": "png",
-    "refreshed_at": "2026-10-19T11:24:01.083817+09:00",
-    "verified_unchanged_financial_modules": [
-      "__init__.py",
-      "compute.py",
-      "config.py",
-      "data.py",
-      "diagnostics.py",
-      "engine.py",
-      "events.py",
-      "execution.py",
-      "exit_path.py",
-      "extensions.py",
-      "ledger.py",
-      "rules.py",
-      "status.py",
-      "strategies.py",
-      "utils.py",
-      "worker.py"
-    ],
-    "verified_statistics_unchanged": true,
-    "basis": "从原始净值、费用及摘要生成报表；财务模块与统计口径逐项核对；CLI 与服务同步 Markdown 文件入口"
-  }
+  ]
 }

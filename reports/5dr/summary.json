@@ -1,20 +1,20 @@
 {
-  "name": "5DR · 非 ST 全市场 5 日反转 · 10 亿",
+  "name": "5DR · 非 ST 全市场 5 日反转 · 100 只 · 10 亿",
   "strategy": "reversal",
   "start": "2025-01-02",
   "end": "2026-09-30",
   "trading_days": 424,
   "initial_cash": "1000000000.00",
-  "ending_nav": "953179009.93",
-  "net_profit": "-46820990.07",
-  "return": -0.04682099006999996,
-  "annual_return": -0.028097806180333307,
-  "max_drawdown": 0.10274501242581868,
-  "sharpe": -0.6085347883241459,
-  "average_exposure": 0.08400955992071715,
+  "ending_nav": "904078376.82",
+  "net_profit": "-95921623.18",
+  "return": -0.09592162317999997,
+  "annual_return": -0.058172126236769595,
+  "max_drawdown": 0.27667530215883407,
+  "sharpe": -0.41714801735948887,
+  "average_exposure": 0.29523793407438836,
   "ending_exposure": 0.0,
   "target_exposure": 0.95,
-  "ending_cash": "953179009.93",
+  "ending_cash": "904078376.82",
   "ending_market_value": "0",
   "ending_positions": 0,
   "ending_receivables": "0",
@@ -22,19 +22,19 @@
   "ending_liabilities": "0",
   "stale_value": "0",
   "first_trade_date": "2025-01-02",
-  "trade_count": 3207,
-  "order_count": 16065,
-  "total_costs": "9666607.54",
+  "trade_count": 15099,
+  "order_count": 26779,
+  "total_costs": "35655186.76",
   "costs": {
-    "commission": "1125193.26",
-    "slippage": "5625462.09",
-    "stamp_tax": "2803442.55",
-    "transfer": "112509.64"
+    "commission": "4148131.57",
+    "slippage": "20738237.68",
+    "stamp_tax": "10354052.19",
+    "transfer": "414765.32"
   },
-  "turnover_notional": "11250922032.16",
-  "expired_orders": 14529,
-  "capacity_constrained_orders": 8335,
-  "capacity_constrained_notional": "39268779219.15",
+  "turnover_notional": "41476462384.65",
+  "expired_orders": 19283,
+  "capacity_constrained_orders": 12018,
+  "capacity_constrained_notional": "30425008845.31",
   "exit_mode": "latest_feasible",
   "exit_label": "按规则最晚启动退出",
   "exit_planning": {
@@ -74,10 +74,10 @@
       60
     ],
     "cache_key": "0b08e0535951f9be4537ddd403b65b032564fa08332576ed1f9aced8bb179551",
-    "cache_hit": true,
-    "seconds": 1.594
+    "cache_hit": false,
+    "seconds": 2.044
   },
-  "created_at": "2026-10-19T06:20:09.331569+09:00",
+  "created_at": "2026-10-27T16:49:08.144258+09:00",
   "warmup": {
     "first": "2024-01-01",
     "last_decision": "2024-12-31"
@@ -98,13 +98,11 @@
     "exposure": "股票市值除以净资产；待结算权益单列",
     "capacity_constrained_notional": "因共享容量到期的委托余量按该次开盘价折算，跨日累计并包含重复尝试，买卖双向合计"
   },
-  "benchmark_return": 0.04582408238000002,
-  "benchmark_ending_nav": "1045824082.38",
-  "run_id": "report-5dr",
+  "run_id": "report-5dr-100",
   "input_fingerprint": "e4bb3556203b55264d5bf27c750d45ca8ac8a990cb095dcb7bdebcc1a18e6d44",
   "status_fingerprint": "836ff2bb30f416ea1d05277ced05819dd565629f3d6f3ea0ca223c84a97405a4",
   "config": {
-    "name": "5DR · 非 ST 全市场 5 日反转 · 10 亿",
+    "name": "5DR · 非 ST 全市场 5 日反转 · 100 只 · 10 亿",
     "data_dir": "feathers",
     "status_dir": "data/status",
     "output_dir": "runs",
@@ -118,7 +116,7 @@
     "exit_mode": "latest_feasible",
     "strategy": "reversal",
     "rebalance_days": 5,
-    "max_positions": 20,
+    "max_positions": 100,
     "target_exposure": "0.95",
     "min_history": 60,
     "min_adv20": "20000000",
@@ -127,11 +125,10 @@
     "min_commission": "5.00",
     "stamp_tax_rate": "0.0005",
     "slippage_rate": "0.0005",
-    "auto_sync_status": true,
+    "auto_sync_status": false,
     "strict_status": true,
     "events_file": null,
     "status_file": null,
-    "benchmark": true,
     "parameters": {
       "window": 5,
       "allocation": "equal"
@@ -179,5 +176,5 @@
     "8": "策略因子准备",
     "9": "已生效状态限制"
   },
-  "schema_version": 1
+  "schema_version": 2
 }

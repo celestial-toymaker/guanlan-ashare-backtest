@@ -1,57 +1,46 @@
-"""从已保存账本生成 Markdown 报告，并保留报表刷新前的来源哈希。"""
-from pathlib import Path
+"""从既有主策略账本刷新报告，并保存原始来源及财务文件哈希。"""
 from datetime import datetime
-import ast
-import json
-
+from pathlib import Path
+from shutil import copy2,copytree
+import argparse,json
 import pandas as pd
-
 from ashare_bt.analytics import write_report
-from ashare_bt.config import ROOT
-from ashare_bt.utils import atomic_json, sha256
+from ashare_bt.config import Config,ROOT
+from ashare_bt.utils import atomic_json,sha256
 
 
-def refresh():
-    current=ROOT/'src/ashare_bt'
+def refresh(run_ids=None):
+    directories=[ROOT/'runs'/ident for ident in run_ids] if run_ids else sorted((ROOT/'runs').glob('full-*'))
     results=[]
-    for directory in sorted((ROOT/'runs').iterdir()):
-        if not (directory.name.startswith('full-') or directory.name=='report-5dr'):
-            continue
-        manifest_path=directory/'manifest.json'
-        if not manifest_path.exists():
-            continue
-        previous=json.loads(manifest_path.read_text())
-        verified=[]
-        for name,digest in previous['source_sha256'].items():
-            snapshot=directory/'source'/name
-            assert sha256(snapshot)==digest,(directory.name,name,'来源快照')
-            if name=='analytics.py':
-                statistics=lambda text:ast.dump(next(node for node in ast.parse(text).body if isinstance(node,ast.FunctionDef) and node.name=='summarize'))
-                assert statistics(snapshot.read_text())==statistics((current/name).read_text())
-            elif name not in {'cli.py','server.py'}:
-                assert sha256(current/name)==digest,(directory.name,name,'财务模块')
-                verified.append(name)
+    for directory in directories:
+        previous=json.loads((directory/'manifest.json').read_text())
         summary=json.loads((directory/'summary.json').read_text())
-        reference_path=directory/'benchmark_equity.parquet'
-        reference=pd.read_parquet(reference_path) if reference_path.exists() else None
-        write_report(directory,summary,pd.read_parquet(directory/'equity.parquet'),reference)
-        old_chart=previous.get('report',{}).get('chart')
-        if old_chart and old_chart!='equity-curve.png' and Path(old_chart).name==old_chart:
-            (directory/old_chart).unlink(missing_ok=True)
-        refreshed=json.loads(manifest_path.read_text())
-        refreshed['simulation_source_sha256']=previous.get('simulation_source_sha256',previous['source_sha256'])
-        history=previous.get('report_source_history',[])
-        if previous['source_sha256']!=refreshed['source_sha256'] and previous['source_sha256'] not in history:
-            history.append(previous['source_sha256'])
-        refreshed['report_source_history']=history
-        refreshed['report_refresh']={'format':'markdown','chart_format':'png','refreshed_at':datetime.now().astimezone().isoformat(),
-            'verified_unchanged_financial_modules':verified,'verified_statistics_unchanged':True,
-            'basis':'从原始净值、费用及摘要生成报表；财务模块与统计口径逐项核对；CLI 与服务同步 Markdown 文件入口'}
-        atomic_json(manifest_path,refreshed)
-        (directory/'report.html').unlink(missing_ok=True)
-        results.append(directory.name)
-    (ROOT/'reports/5dr/report.html').unlink(missing_ok=True)
-    print(json.dumps({'refreshed':results,'format':'markdown'},ensure_ascii=False))
+        before={p.name:sha256(p) for p in directory.iterdir() if p.suffix in {'.parquet','.csv','.jsonl'} and not p.name.startswith('benchmark_')}
+        archive=ROOT/'work/report-history'/directory.name
+        if not archive.exists():
+            archive.mkdir(parents=True)
+            for name in ('config.json','summary.json','manifest.json','report.md','equity-curve.png'):
+                if (directory/name).exists():copy2(directory/name,archive/name)
+            copytree(directory/'source',archive/'source')
+        original=previous.get('simulation_source_sha256',previous['source_sha256'])
+        summary={key:value for key,value in summary.items() if not key.startswith('benchmark_')}
+        summary['config']=Config.from_dict(summary['config']).public()
+        summary['schema_version']=2
+        write_report(directory,summary,pd.read_parquet(directory/'equity.parquet'))
+        manifest=json.loads((directory/'manifest.json').read_text())
+        manifest['simulation_source_sha256']=original
+        manifest['report_refresh']={'refreshed_at':datetime.now().astimezone().isoformat(),
+            'basis':'从保存的主策略净值及摘要绘制单曲线；原始来源归档，主策略财务文件逐项保持一致',
+            'original_report_manifest_sha256':sha256(archive/'manifest.json'),
+            'verified_main_strategy_financial_files':before,'verified_main_strategy_statistics_unchanged':True}
+        assert all(sha256(directory/name)==digest for name,digest in before.items())
+        atomic_json(directory/'config.json',summary['config']);atomic_json(directory/'summary.json',summary)
+        atomic_json(directory/'manifest.json',manifest)
+        results.append({'run_id':directory.name,'financial_files_checked':len(before),'financial_files_unchanged':True})
+    atomic_json(ROOT/'data/report-refresh-check.json',{'passed':True,'runs':results})
+    print(json.dumps({'refreshed':results},ensure_ascii=False))
 
 
-if __name__=='__main__':refresh()
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('--run-id',action='append')
+    refresh(parser.parse_args().run_id)

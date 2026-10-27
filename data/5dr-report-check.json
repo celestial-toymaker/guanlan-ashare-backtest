@@ -1,25 +1,26 @@
 {
   "passed": true,
-  "run_id": "report-5dr",
+  "run_id": "report-5dr-100",
   "strategy": "5DR（5 日反转）",
-  "ranking": "5 日复权收益从低到高，同分按证券代码",
-  "baseline": "runs/full-reversal",
+  "max_positions": 100,
+  "first_target_count": 100,
+  "max_actual_positions": 100,
   "device": "mps",
   "trading_days": 424,
   "tables": [
     {
       "table": "orders",
-      "rows": 16065,
+      "rows": 26779,
       "identical": true
     },
     {
       "table": "trades",
-      "rows": 3207,
+      "rows": 15099,
       "identical": true
     },
     {
       "table": "journal",
-      "rows": 85377,
+      "rows": 200361,
       "identical": true
     },
     {
@@ -29,17 +30,17 @@
     },
     {
       "table": "positions",
-      "rows": 8407,
+      "rows": 42179,
       "identical": true
     },
     {
       "table": "fees",
-      "rows": 11556,
+      "rows": 54363,
       "identical": true
     },
     {
       "table": "exits",
-      "rows": 8448,
+      "rows": 42330,
       "identical": true
     },
     {
@@ -53,34 +54,44 @@
       "identical": true
     },
     {
-      "table": "benchmark_equity",
-      "rows": 424,
+      "table": "order_events",
+      "rows": 87940,
+      "identical": true
+    },
+    {
+      "table": "terminal_settlements",
+      "rows": 0,
       "identical": true
     }
   ],
-  "config_sha256": "8419e8f7ad2414cdc2a82937a6e21fe817a132490e6f26f104d195fa7e12e061",
-  "report_sha256": "5652e8b39e8f4a09082fa93cf29755ab4915e2a8de13fe5ba668c55461525bf3",
+  "non_st_entry": true,
+  "shared_capacity": true,
+  "t_plus_one": true,
+  "fees": true,
+  "double_entry": true,
+  "terminal_equity_cleared": true,
+  "daily_top100_original_precision": true,
+  "config_sha256": "57a53a01918b5d5636ffe5bdc4a19458f0eeae0e56694ef8481f4ae512d918b7",
   "source_sha256": {
     "__init__.py": "d8b68ddf538de90ee92879416fe3a1c0188b0c965fa754a5e48ba89e5b836f85",
-    "analytics.py": "c2b9b35f958b767bdc7d8fa3f9d76876b3f7f1b3bec7ac2fcd5f94d627712d5f",
+    "analytics.py": "978fcf260a8f8ab4f1f545d26f7f479d93bd0984cd58376ce2cc14ed027f784f",
     "cli.py": "e9831f0e28bd7710c05a843b699abfddf361a23ea26aadcc61db79c39c1335aa",
     "compute.py": "13b9bc449c0deed864e13311bfc9b18174efdf0c607f087ae63c3fa328174134",
-    "config.py": "7250ca8633377bb76a958f7a2ebd80287c7a809bad5ca1d9b7f4a4c13b88e28d",
+    "config.py": "bfb9af7c9a5579de8a9e0cf7a7c0f567cf0b768ab17420acf4604c157cbda27c",
     "data.py": "e74f01531a15772de9b8740cb42aad5f1bbb3738d331c9efd6f2117312d4e0b1",
     "diagnostics.py": "04c3b5f100d8eb7ac648a650f0b18d9df063abd92f068acbee74d317d2df50ae",
-    "engine.py": "b27f78d095e448d15ea7a9e6fb334e4dccdeb78bb158de7b542f1a4af9cdaad9",
+    "engine.py": "27d315f53d1cf0a0f0832670b8cf53c49df11bb6cce117a0b6e8ab79c3535bf1",
     "events.py": "698191219d7d5268180004783102029c5d7a5f5e0643090ef50b7741756b72ac",
     "execution.py": "a13f7df22c35a4584c3081bd975148174a9a68f45d08544ab63c8ab929b7c7b9",
     "exit_path.py": "212210ce7a1ea962bc7791b25f8c2f00a8284dd131f170e16493a2406d793d31",
     "extensions.py": "24056888804ad6251c23b7d883e129ff7b3e423af283caf6461c3eca12511804",
     "ledger.py": "947055611662bb1f562b4a39ca0db4eee89f659051a5bc1073d5f5e1011d3d31",
     "rules.py": "d6ae09ac09eb4a16e8825ced598c32836bbe601f7c212ecc6b4e0d0b67eed899",
-    "server.py": "b27e76d60415d9f4d184793db16dd009f2955bac8da8c313f93a7db6293588de",
+    "server.py": "04b6b373987cb2bbecc26ff383d76ebee0343d75c23bb5b9d4b37fba2ac54404",
     "status.py": "d785b30749cc0af4a928c973056bfe91d3bf759dbbc517373ade13fdd787cb26",
-    "strategies.py": "675be3f50a2732855bd177d711bc16d63f179b45b9ec99a8938d6aad3810f2ed",
+    "strategies.py": "4d2fe589eddb7e942efa74098c423e26f9a8a89a626891a2e1f777f906fa6366",
     "utils.py": "a47d7864ef8c096efeb0c609620b92aa0a3d9b0c7a6537a27f79ed794958ff65",
-    "worker.py": "0899b0fae583ff09770cfbb693a3c0a8aea33f6bb6e4bf00a367d6eb6e0f5441"
+    "worker.py": "88a8ca9c86a3599708678b5bda4a330463f53e064b39926043f0397e516d5bab"
   },
-  "application_publication_changes": {},
-  "financial_source_matches": true
+  "report_sha256": "df54ce74f3fc4279bd69d4f7bb6c8543727563bfc3cdcee20d08a521683575eb"
 }

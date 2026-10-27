@@ -18,7 +18,6 @@
       "fees": true,
       "double_entry": true,
       "source_snapshot": true,
-      "common_reference": true,
       "actual_path_exit": true,
       "terminal_equity_cleared": true
     },
@@ -33,7 +32,6 @@
       "fees": true,
       "double_entry": true,
       "source_snapshot": true,
-      "common_reference": true,
       "actual_path_exit": true,
       "terminal_equity_cleared": true
     },
@@ -48,7 +46,6 @@
       "fees": true,
       "double_entry": true,
       "source_snapshot": true,
-      "common_reference": true,
       "actual_path_exit": true,
       "terminal_equity_cleared": true
     },
@@ -63,7 +60,6 @@
       "fees": true,
       "double_entry": true,
       "source_snapshot": true,
-      "common_reference": true,
       "actual_path_exit": true,
       "terminal_equity_cleared": true
     },
@@ -78,7 +74,6 @@
       "fees": true,
       "double_entry": true,
       "source_snapshot": true,
-      "common_reference": true,
       "actual_path_exit": true,
       "terminal_equity_cleared": true
     },
@@ -93,7 +88,6 @@
       "fees": true,
       "double_entry": true,
       "source_snapshot": true,
-      "common_reference": true,
       "actual_path_exit": true,
       "terminal_equity_cleared": true
     },
@@ -108,7 +102,6 @@
       "fees": true,
       "double_entry": true,
       "source_snapshot": true,
-      "common_reference": true,
       "actual_path_exit": true,
       "terminal_equity_cleared": true
     },
@@ -123,7 +116,6 @@
       "fees": true,
       "double_entry": true,
       "source_snapshot": true,
-      "common_reference": true,
       "actual_path_exit": true,
       "terminal_equity_cleared": true
     },
@@ -138,7 +130,6 @@
       "fees": true,
       "double_entry": true,
       "source_snapshot": true,
-      "common_reference": true,
       "actual_path_exit": true,
       "terminal_equity_cleared": true
     },
@@ -153,13 +144,12 @@
       "fees": true,
       "double_entry": true,
       "source_snapshot": true,
-      "common_reference": true,
       "actual_path_exit": true,
       "terminal_equity_cleared": true
     }
   ],
-  "python_tests": 64,
-  "browser_tests": 3,
+  "python_tests": 66,
+  "browser_tests": 4,
   "mps": {
     "device": "Apple M3 Pro",
     "all_ten_strategy_signals": true,
@@ -174,60 +164,86 @@
   },
   "full_replay": {
     "passed": true,
-    "tables": {
-      "orders": true,
-      "trades": true,
-      "journal": true,
-      "equity": true,
-      "positions": true,
-      "fees": true,
-      "exits": true,
-      "universe": true,
-      "selection": true
-    },
+    "run_id": "report-5dr-100",
+    "replay_id": "report-5dr-100-replay",
     "source_sha256": {
       "__init__.py": "d8b68ddf538de90ee92879416fe3a1c0188b0c965fa754a5e48ba89e5b836f85",
-      "analytics.py": "7df1ea999e1ba54e660c8e35e68487499958985b75f14c437d0b863c055069e3",
+      "analytics.py": "978fcf260a8f8ab4f1f545d26f7f479d93bd0984cd58376ce2cc14ed027f784f",
       "cli.py": "e9831f0e28bd7710c05a843b699abfddf361a23ea26aadcc61db79c39c1335aa",
       "compute.py": "13b9bc449c0deed864e13311bfc9b18174efdf0c607f087ae63c3fa328174134",
-      "config.py": "7250ca8633377bb76a958f7a2ebd80287c7a809bad5ca1d9b7f4a4c13b88e28d",
+      "config.py": "bfb9af7c9a5579de8a9e0cf7a7c0f567cf0b768ab17420acf4604c157cbda27c",
       "data.py": "e74f01531a15772de9b8740cb42aad5f1bbb3738d331c9efd6f2117312d4e0b1",
       "diagnostics.py": "04c3b5f100d8eb7ac648a650f0b18d9df063abd92f068acbee74d317d2df50ae",
-      "engine.py": "b27f78d095e448d15ea7a9e6fb334e4dccdeb78bb158de7b542f1a4af9cdaad9",
+      "engine.py": "27d315f53d1cf0a0f0832670b8cf53c49df11bb6cce117a0b6e8ab79c3535bf1",
       "events.py": "698191219d7d5268180004783102029c5d7a5f5e0643090ef50b7741756b72ac",
       "execution.py": "a13f7df22c35a4584c3081bd975148174a9a68f45d08544ab63c8ab929b7c7b9",
       "exit_path.py": "212210ce7a1ea962bc7791b25f8c2f00a8284dd131f170e16493a2406d793d31",
       "extensions.py": "24056888804ad6251c23b7d883e129ff7b3e423af283caf6461c3eca12511804",
       "ledger.py": "947055611662bb1f562b4a39ca0db4eee89f659051a5bc1073d5f5e1011d3d31",
       "rules.py": "d6ae09ac09eb4a16e8825ced598c32836bbe601f7c212ecc6b4e0d0b67eed899",
-      "server.py": "7ed274c75e0581894818960695c46e6f3ab057745a1d0dc5089b0ffdc3ebf8fb",
+      "server.py": "04b6b373987cb2bbecc26ff383d76ebee0343d75c23bb5b9d4b37fba2ac54404",
       "status.py": "d785b30749cc0af4a928c973056bfe91d3bf759dbbc517373ade13fdd787cb26",
-      "strategies.py": "675be3f50a2732855bd177d711bc16d63f179b45b9ec99a8938d6aad3810f2ed",
+      "strategies.py": "4d2fe589eddb7e942efa74098c423e26f9a8a89a626891a2e1f777f906fa6366",
       "utils.py": "a47d7864ef8c096efeb0c609620b92aa0a3d9b0c7a6537a27f79ed794958ff65",
-      "worker.py": "0899b0fae583ff09770cfbb693a3c0a8aea33f6bb6e4bf00a367d6eb6e0f5441"
+      "worker.py": "88a8ca9c86a3599708678b5bda4a330463f53e064b39926043f0397e516d5bab"
     },
-    "publication_report_source_sha256": {
-      "__init__.py": "d8b68ddf538de90ee92879416fe3a1c0188b0c965fa754a5e48ba89e5b836f85",
-      "analytics.py": "c2b9b35f958b767bdc7d8fa3f9d76876b3f7f1b3bec7ac2fcd5f94d627712d5f",
-      "cli.py": "e9831f0e28bd7710c05a843b699abfddf361a23ea26aadcc61db79c39c1335aa",
-      "compute.py": "13b9bc449c0deed864e13311bfc9b18174efdf0c607f087ae63c3fa328174134",
-      "config.py": "7250ca8633377bb76a958f7a2ebd80287c7a809bad5ca1d9b7f4a4c13b88e28d",
-      "data.py": "e74f01531a15772de9b8740cb42aad5f1bbb3738d331c9efd6f2117312d4e0b1",
-      "diagnostics.py": "04c3b5f100d8eb7ac648a650f0b18d9df063abd92f068acbee74d317d2df50ae",
-      "engine.py": "b27f78d095e448d15ea7a9e6fb334e4dccdeb78bb158de7b542f1a4af9cdaad9",
-      "events.py": "698191219d7d5268180004783102029c5d7a5f5e0643090ef50b7741756b72ac",
-      "execution.py": "a13f7df22c35a4584c3081bd975148174a9a68f45d08544ab63c8ab929b7c7b9",
-      "exit_path.py": "212210ce7a1ea962bc7791b25f8c2f00a8284dd131f170e16493a2406d793d31",
-      "extensions.py": "24056888804ad6251c23b7d883e129ff7b3e423af283caf6461c3eca12511804",
-      "ledger.py": "947055611662bb1f562b4a39ca0db4eee89f659051a5bc1073d5f5e1011d3d31",
-      "rules.py": "d6ae09ac09eb4a16e8825ced598c32836bbe601f7c212ecc6b4e0d0b67eed899",
-      "server.py": "b27e76d60415d9f4d184793db16dd009f2955bac8da8c313f93a7db6293588de",
-      "status.py": "d785b30749cc0af4a928c973056bfe91d3bf759dbbc517373ade13fdd787cb26",
-      "strategies.py": "675be3f50a2732855bd177d711bc16d63f179b45b9ec99a8938d6aad3810f2ed",
-      "utils.py": "a47d7864ef8c096efeb0c609620b92aa0a3d9b0c7a6537a27f79ed794958ff65",
-      "worker.py": "0899b0fae583ff09770cfbb693a3c0a8aea33f6bb6e4bf00a367d6eb6e0f5441"
-    },
-    "report_refresh_basis": "重放保留执行时源码哈希；本次图片渲染更新已核对财务模块与统计函数一致"
+    "tables": [
+      {
+        "table": "orders",
+        "rows": 26779,
+        "identical": true
+      },
+      {
+        "table": "trades",
+        "rows": 15099,
+        "identical": true
+      },
+      {
+        "table": "journal",
+        "rows": 200361,
+        "identical": true
+      },
+      {
+        "table": "equity",
+        "rows": 424,
+        "identical": true
+      },
+      {
+        "table": "positions",
+        "rows": 42179,
+        "identical": true
+      },
+      {
+        "table": "fees",
+        "rows": 54363,
+        "identical": true
+      },
+      {
+        "table": "exits",
+        "rows": 42330,
+        "identical": true
+      },
+      {
+        "table": "universe",
+        "rows": 425,
+        "identical": true
+      },
+      {
+        "table": "selection",
+        "rows": 2316675,
+        "identical": true
+      },
+      {
+        "table": "order_events",
+        "rows": 87940,
+        "identical": true
+      },
+      {
+        "table": "terminal_settlements",
+        "rows": 0,
+        "identical": true
+      }
+    ]
   },
   "web": {
     "dependencies": {
@@ -246,7 +262,7 @@
       "vite": "6.4.3"
     },
     "source_sha256": {
-      "web/src/App.tsx": "d25d0e771a568ccb2adc577e72d66be86d5824de160dc3468b60c6bb3fdb1d8d",
+      "web/src/App.tsx": "f4da0287fde3853c9d5a29f8dfa4fd4c82116be036ab633828641b94d02f67d2",
       "web/src/main.tsx": "e614ac3b211ff46384d74b651f79fed94b722a0b122bd883c7e2d268ea70333a",
       "web/src/style.css": "948aabb8d72c6265aee1f5a7a78281d3b8857ea2715ed54d1c9c2ece3e4b7157"
     }
@@ -256,5 +272,5 @@
     "hardware_acceptance": "待 NVIDIA 实机；用户确认当前仅有 Mac"
   },
   "application_publication_changes": {},
-  "financial_source_matches": true
+  "financial_provenance_verified": true
 }

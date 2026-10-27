@@ -17,7 +17,7 @@ def package():
     for name in ('README.md','验收记录.md','THIRD_PARTY_NOTICES.md','pyproject.toml','.gitignore','启动工作台.command',
                  'web/index.html','web/package.json','web/package-lock.json','web/tsconfig.json',
                  'web/vite.config.ts','web/playwright.config.ts','web/tests/workbench.spec.ts',
-                 'data/acceptance.json','data/png-report-check.json','data/actual-exit-check.json','data/full-acceptance.json','data/5dr-report-check.json','data/profile.json','data/audit.json',
+                 'data/acceptance.json','data/png-report-check.json','data/actual-exit-check.json','data/full-acceptance.json','data/5dr-report-check.json','data/5dr100-ranking-check.json','data/report-refresh-check.json','data/main-strategy-preservation.json','data/profile.json','data/audit.json',
                  'data/mps_validation.json','data/status/coverage.json','data/formal-status-coverage.json'):
         path=ROOT/name
         if path.exists():files.add(path)

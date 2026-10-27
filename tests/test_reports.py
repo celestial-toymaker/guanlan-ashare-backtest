@@ -9,18 +9,15 @@ from ashare_bt.analytics import chart_png
 from ashare_bt.engine import run
 
 
-@pytest.mark.parametrize('include_reference',[False,True])
-def test_png_uses_all_original_daily_values_and_aligns_reference(tmp_path,monkeypatch,include_reference):
+def test_png_uses_all_original_daily_values(tmp_path,monkeypatch):
     equity=pd.DataFrame({'date':['2025-01-02','2025-01-03','2025-01-06'],
                          'unit_nav':[1.02,.98,1.05]})
-    reference=pd.DataFrame({'date':['2025-01-06','2025-01-02','2025-01-03'],
-                            'unit_nav':[1.03,1.,1.01]}) if include_reference else None
     original=equity.copy(deep=True)
     captured={}
     save=FigureCanvasAgg.print_png
     def inspect(canvas,*args,**kwargs):
         for line in canvas.figure.axes[0].lines:
-            if line.get_color() in {'#315ee8','#98a6c0'}:
+            if line.get_color() in {'#315ee8'}:
                 captured[line.get_color()]=np.asarray(line.get_ydata(),dtype=float)
                 assert len(line.get_xdata())==len(equity)
         result=save(canvas,*args,**kwargs)
@@ -31,12 +28,9 @@ def test_png_uses_all_original_daily_values_and_aligns_reference(tmp_path,monkey
             assert 0 <= box.y0 <= box.y1 <= 580
         return result
     monkeypatch.setattr(FigureCanvasAgg,'print_png',inspect)
-    path=chart_png(tmp_path,equity,reference)
+    path=chart_png(tmp_path,equity)
     np.testing.assert_allclose(captured['#315ee8'],[2.,-2.,5.],atol=1e-12)
-    if include_reference:
-        np.testing.assert_allclose(captured['#98a6c0'],[0.,1.,3.],atol=1e-12)
-    else:
-        assert set(captured)=={'#315ee8'}
+    assert set(captured)=={'#315ee8'}
     pd.testing.assert_frame_equal(equity,original)
     with Image.open(path) as image:
         assert image.format=='PNG' and image.size==(1880,580)

@@ -18,7 +18,7 @@ def execute(path):
 
     def progress(**record):
         job.update(record)
-        weights = {"data":(.02,.10),"factors":(.12,.08),"status":(.20,.15),"backtest":(.35,.50),"benchmark":(.85,.10),"report":(.95,.05)}
+        weights = {"data":(.02,.10),"factors":(.12,.08),"status":(.20,.15),"backtest":(.35,.60),"report":(.95,.05)}
         offset,span = weights.get(record.get("stage"),(.0,.0))
         job["progress"] = offset + span * record.get("done",0) / max(record.get("total",1),1)
         atomic_json(path,job)

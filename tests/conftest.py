@@ -23,7 +23,7 @@ def market(tmp_path):
               "num_trades": np.full_like(close, 10000), "cumadj": np.ones_like(close)}
     data = MarketData(dates, securities, arrays)
     config = Config(root=tmp_path, start="2025-01-02", end="2025-01-24", initial_cash="1000000",
-                    device="reference", max_positions=3, benchmark=False, auto_sync_status=False)
+                    device="reference", max_positions=3, auto_sync_status=False)
     features = compute_features(data, config, use_cache=False)
     status = StatusProvider.synthetic(dates, securities)
     return config, data, features, status

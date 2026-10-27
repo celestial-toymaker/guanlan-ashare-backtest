@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "basis_commit": "4f9c8fb38b4ea1f06525f379ac38a4186a1b340e",
+  "unchanged_simulation_functions": [
+    "_simulate",
+    "eligibility",
+    "status_requirement"
+  ],
+  "unchanged_execution_modules": {
+    "ledger.py": "947055611662bb1f562b4a39ca0db4eee89f659051a5bc1073d5f5e1011d3d31",
+    "execution.py": "a13f7df22c35a4584c3081bd975148174a9a68f45d08544ab63c8ab929b7c7b9",
+    "exit_path.py": "212210ce7a1ea962bc7791b25f8c2f00a8284dd131f170e16493a2406d793d31",
+    "rules.py": "d6ae09ac09eb4a16e8825ced598c32836bbe601f7c212ecc6b4e0d0b67eed899",
+    "compute.py": "13b9bc449c0deed864e13311bfc9b18174efdf0c607f087ae63c3fa328174134",
+    "data.py": "e74f01531a15772de9b8740cb42aad5f1bbb3738d331c9efd6f2117312d4e0b1",
+    "status.py": "d785b30749cc0af4a928c973056bfe91d3bf759dbbc517373ade13fdd787cb26",
+    "events.py": "698191219d7d5268180004783102029c5d7a5f5e0643090ef50b7741756b72ac",
+    "diagnostics.py": "04c3b5f100d8eb7ac648a650f0b18d9df063abd92f068acbee74d317d2df50ae",
+    "utils.py": "a47d7864ef8c096efeb0c609620b92aa0a3d9b0c7a6537a27f79ed794958ff65"
+  }
+}

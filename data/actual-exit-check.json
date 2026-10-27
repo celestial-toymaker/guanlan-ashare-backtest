@@ -73,13 +73,13 @@
       "synthetic_terminal_settlement": false
     },
     {
-      "run_id": "report-5dr",
-      "path_records": 8448,
-      "projected_fills_checked": 26301,
+      "run_id": "report-5dr-100",
+      "path_records": 42330,
+      "projected_fills_checked": 110470,
       "terminal_equity_cleared": true,
       "synthetic_terminal_settlement": false
     }
   ],
-  "projected_fills_checked": 755721,
+  "projected_fills_checked": 839890,
   "data_fingerprint": "e4bb3556203b55264d5bf27c750d45ca8ac8a990cb095dcb7bdebcc1a18e6d44"
 }

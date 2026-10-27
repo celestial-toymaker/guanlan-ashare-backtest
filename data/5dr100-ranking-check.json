@@ -1,0 +1,2148 @@
+{
+  "passed": true,
+  "device": {
+    "device": "mps",
+    "device_name": "Apple M3 Pro",
+    "torch": "2.5.1",
+    "cuda": null,
+    "dtype": "float32",
+    "block_days": 128,
+    "windows": [
+      5,
+      10,
+      14,
+      20,
+      60
+    ],
+    "cache_key": "0b08e0535951f9be4537ddd403b65b032564fa08332576ed1f9aced8bb179551",
+    "cache_hit": false,
+    "seconds": 2.044
+  },
+  "checks": [
+    {
+      "date": "2024-12-31",
+      "candidates": 4897,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-02",
+      "candidates": 4894,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-03",
+      "candidates": 4889,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-06",
+      "candidates": 4883,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-07",
+      "candidates": 4875,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-08",
+      "candidates": 4866,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-09",
+      "candidates": 4858,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-10",
+      "candidates": 4835,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-13",
+      "candidates": 4822,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-14",
+      "candidates": 4817,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-15",
+      "candidates": 4802,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-16",
+      "candidates": 4798,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-17",
+      "candidates": 4789,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-20",
+      "candidates": 4782,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-21",
+      "candidates": 4766,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-22",
+      "candidates": 4758,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-23",
+      "candidates": 4753,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-24",
+      "candidates": 4752,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-01-27",
+      "candidates": 4749,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-05",
+      "candidates": 4749,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-06",
+      "candidates": 4749,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-07",
+      "candidates": 4762,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-10",
+      "candidates": 4764,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-11",
+      "candidates": 4764,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-12",
+      "candidates": 4768,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-13",
+      "candidates": 4775,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-14",
+      "candidates": 4779,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-17",
+      "candidates": 4794,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-18",
+      "candidates": 4809,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-19",
+      "candidates": 4815,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-20",
+      "candidates": 4825,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-21",
+      "candidates": 4830,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-24",
+      "candidates": 4844,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-25",
+      "candidates": 4840,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-26",
+      "candidates": 4849,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-27",
+      "candidates": 4863,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-02-28",
+      "candidates": 4863,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-03",
+      "candidates": 4870,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-04",
+      "candidates": 4877,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-05",
+      "candidates": 4880,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-06",
+      "candidates": 4885,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-07",
+      "candidates": 4887,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-10",
+      "candidates": 4890,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-11",
+      "candidates": 4889,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-12",
+      "candidates": 4889,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-13",
+      "candidates": 4897,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-14",
+      "candidates": 4903,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-17",
+      "candidates": 4898,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-18",
+      "candidates": 4903,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-19",
+      "candidates": 4896,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-20",
+      "candidates": 4900,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-21",
+      "candidates": 4902,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-24",
+      "candidates": 4907,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-25",
+      "candidates": 4907,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-26",
+      "candidates": 4910,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-27",
+      "candidates": 4911,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-28",
+      "candidates": 4911,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-03-31",
+      "candidates": 4916,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-01",
+      "candidates": 4918,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-02",
+      "candidates": 4917,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-03",
+      "candidates": 4915,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-07",
+      "candidates": 4919,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-08",
+      "candidates": 4918,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-09",
+      "candidates": 4920,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-10",
+      "candidates": 4920,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-11",
+      "candidates": 4920,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-14",
+      "candidates": 4919,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-15",
+      "candidates": 4914,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-16",
+      "candidates": 4912,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-17",
+      "candidates": 4908,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-18",
+      "candidates": 4902,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-21",
+      "candidates": 4901,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-22",
+      "candidates": 4893,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-23",
+      "candidates": 4886,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-24",
+      "candidates": 4883,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-25",
+      "candidates": 4874,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-28",
+      "candidates": 4867,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-29",
+      "candidates": 4842,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-04-30",
+      "candidates": 4822,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-06",
+      "candidates": 4828,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-07",
+      "candidates": 4841,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-08",
+      "candidates": 4836,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-09",
+      "candidates": 4835,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-12",
+      "candidates": 4834,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-13",
+      "candidates": 4832,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-14",
+      "candidates": 4828,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-15",
+      "candidates": 4829,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-16",
+      "candidates": 4831,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-19",
+      "candidates": 4828,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-20",
+      "candidates": 4834,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-21",
+      "candidates": 4839,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-22",
+      "candidates": 4843,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-23",
+      "candidates": 4857,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-26",
+      "candidates": 4857,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-27",
+      "candidates": 4853,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-28",
+      "candidates": 4858,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-29",
+      "candidates": 4860,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-05-30",
+      "candidates": 4863,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-03",
+      "candidates": 4861,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-04",
+      "candidates": 4863,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-05",
+      "candidates": 4858,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-06",
+      "candidates": 4860,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-09",
+      "candidates": 4862,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-10",
+      "candidates": 4867,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-11",
+      "candidates": 4862,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-12",
+      "candidates": 4860,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-13",
+      "candidates": 4867,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-16",
+      "candidates": 4872,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-17",
+      "candidates": 4877,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-18",
+      "candidates": 4874,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-19",
+      "candidates": 4877,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-20",
+      "candidates": 4875,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-23",
+      "candidates": 4871,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-24",
+      "candidates": 4878,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-25",
+      "candidates": 4883,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-26",
+      "candidates": 4885,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-27",
+      "candidates": 4887,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-06-30",
+      "candidates": 4887,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-01",
+      "candidates": 4891,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-02",
+      "candidates": 4894,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-03",
+      "candidates": 4893,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-04",
+      "candidates": 4893,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-07",
+      "candidates": 4895,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-08",
+      "candidates": 4893,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-09",
+      "candidates": 4901,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-10",
+      "candidates": 4903,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-11",
+      "candidates": 4906,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-14",
+      "candidates": 4910,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-15",
+      "candidates": 4914,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-16",
+      "candidates": 4918,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-17",
+      "candidates": 4920,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-18",
+      "candidates": 4926,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-21",
+      "candidates": 4930,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-22",
+      "candidates": 4932,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-23",
+      "candidates": 4938,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-24",
+      "candidates": 4939,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-25",
+      "candidates": 4943,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-28",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-29",
+      "candidates": 4952,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-30",
+      "candidates": 4950,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-07-31",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-01",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-04",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-05",
+      "candidates": 4949,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-06",
+      "candidates": 4951,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-07",
+      "candidates": 4952,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-08",
+      "candidates": 4954,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-11",
+      "candidates": 4957,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-12",
+      "candidates": 4958,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-13",
+      "candidates": 4957,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-14",
+      "candidates": 4958,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-15",
+      "candidates": 4957,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-18",
+      "candidates": 4956,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-19",
+      "candidates": 4957,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-20",
+      "candidates": 4955,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-21",
+      "candidates": 4956,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-22",
+      "candidates": 4956,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-25",
+      "candidates": 4956,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-26",
+      "candidates": 4957,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-27",
+      "candidates": 4960,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-28",
+      "candidates": 4960,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-08-29",
+      "candidates": 4957,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-01",
+      "candidates": 4957,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-02",
+      "candidates": 4959,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-03",
+      "candidates": 4962,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-04",
+      "candidates": 4961,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-05",
+      "candidates": 4962,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-08",
+      "candidates": 4962,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-09",
+      "candidates": 4963,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-10",
+      "candidates": 4963,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-11",
+      "candidates": 4964,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-12",
+      "candidates": 4967,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-15",
+      "candidates": 4965,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-16",
+      "candidates": 4966,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-17",
+      "candidates": 4965,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-18",
+      "candidates": 4964,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-19",
+      "candidates": 4965,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-22",
+      "candidates": 4962,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-23",
+      "candidates": 4962,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-24",
+      "candidates": 4960,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-25",
+      "candidates": 4958,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-26",
+      "candidates": 4956,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-29",
+      "candidates": 4952,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-09-30",
+      "candidates": 4949,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-09",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-10",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-13",
+      "candidates": 4950,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-14",
+      "candidates": 4950,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-15",
+      "candidates": 4951,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-16",
+      "candidates": 4954,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-17",
+      "candidates": 4956,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-20",
+      "candidates": 4955,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-21",
+      "candidates": 4954,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-22",
+      "candidates": 4955,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-23",
+      "candidates": 4956,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-24",
+      "candidates": 4950,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-27",
+      "candidates": 4949,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-28",
+      "candidates": 4948,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-29",
+      "candidates": 4950,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-30",
+      "candidates": 4952,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-10-31",
+      "candidates": 4952,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-03",
+      "candidates": 4952,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-04",
+      "candidates": 4953,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-05",
+      "candidates": 4952,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-06",
+      "candidates": 4954,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-07",
+      "candidates": 4955,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-10",
+      "candidates": 4958,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-11",
+      "candidates": 4962,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-12",
+      "candidates": 4963,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-13",
+      "candidates": 4962,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-14",
+      "candidates": 4961,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-17",
+      "candidates": 4961,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-18",
+      "candidates": 4960,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-19",
+      "candidates": 4963,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-20",
+      "candidates": 4961,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-21",
+      "candidates": 4963,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-24",
+      "candidates": 4958,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-25",
+      "candidates": 4956,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-26",
+      "candidates": 4950,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-27",
+      "candidates": 4950,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-11-28",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-01",
+      "candidates": 4946,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-02",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-03",
+      "candidates": 4950,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-04",
+      "candidates": 4946,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-05",
+      "candidates": 4943,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-08",
+      "candidates": 4943,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-09",
+      "candidates": 4943,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-10",
+      "candidates": 4941,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-11",
+      "candidates": 4942,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-12",
+      "candidates": 4941,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-15",
+      "candidates": 4935,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-16",
+      "candidates": 4932,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-17",
+      "candidates": 4927,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-18",
+      "candidates": 4927,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-19",
+      "candidates": 4919,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-22",
+      "candidates": 4913,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-23",
+      "candidates": 4912,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-24",
+      "candidates": 4911,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-25",
+      "candidates": 4914,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-26",
+      "candidates": 4920,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-29",
+      "candidates": 4916,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-30",
+      "candidates": 4915,
+      "top100_equal": true
+    },
+    {
+      "date": "2025-12-31",
+      "candidates": 4913,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-05",
+      "candidates": 4919,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-06",
+      "candidates": 4923,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-07",
+      "candidates": 4922,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-08",
+      "candidates": 4928,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-09",
+      "candidates": 4932,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-12",
+      "candidates": 4942,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-13",
+      "candidates": 4948,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-14",
+      "candidates": 4951,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-15",
+      "candidates": 4953,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-16",
+      "candidates": 4959,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-19",
+      "candidates": 4967,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-20",
+      "candidates": 4972,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-21",
+      "candidates": 4975,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-22",
+      "candidates": 4975,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-23",
+      "candidates": 4976,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-26",
+      "candidates": 4974,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-27",
+      "candidates": 4974,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-28",
+      "candidates": 4973,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-29",
+      "candidates": 4974,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-01-30",
+      "candidates": 4974,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-02",
+      "candidates": 4977,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-03",
+      "candidates": 4976,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-04",
+      "candidates": 4978,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-05",
+      "candidates": 4977,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-06",
+      "candidates": 4976,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-09",
+      "candidates": 4975,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-10",
+      "candidates": 4976,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-11",
+      "candidates": 4978,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-12",
+      "candidates": 4979,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-13",
+      "candidates": 4977,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-24",
+      "candidates": 4977,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-25",
+      "candidates": 4974,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-26",
+      "candidates": 4975,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-02-27",
+      "candidates": 4977,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-02",
+      "candidates": 4975,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-03",
+      "candidates": 4975,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-04",
+      "candidates": 4976,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-05",
+      "candidates": 4976,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-06",
+      "candidates": 4977,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-09",
+      "candidates": 4980,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-10",
+      "candidates": 4980,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-11",
+      "candidates": 4981,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-12",
+      "candidates": 4979,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-13",
+      "candidates": 4980,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-16",
+      "candidates": 4979,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-17",
+      "candidates": 4976,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-18",
+      "candidates": 4975,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-19",
+      "candidates": 4976,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-20",
+      "candidates": 4977,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-23",
+      "candidates": 4980,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-24",
+      "candidates": 4977,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-25",
+      "candidates": 4976,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-26",
+      "candidates": 4977,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-27",
+      "candidates": 4974,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-30",
+      "candidates": 4973,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-03-31",
+      "candidates": 4973,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-01",
+      "candidates": 4971,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-02",
+      "candidates": 4974,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-03",
+      "candidates": 4976,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-07",
+      "candidates": 4972,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-08",
+      "candidates": 4979,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-09",
+      "candidates": 4981,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-10",
+      "candidates": 4981,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-13",
+      "candidates": 4980,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-14",
+      "candidates": 4979,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-15",
+      "candidates": 4973,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-16",
+      "candidates": 4973,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-17",
+      "candidates": 4975,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-20",
+      "candidates": 4971,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-21",
+      "candidates": 4967,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-22",
+      "candidates": 4963,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-23",
+      "candidates": 4959,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-24",
+      "candidates": 4956,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-27",
+      "candidates": 4951,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-28",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-29",
+      "candidates": 4916,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-04-30",
+      "candidates": 4893,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-06",
+      "candidates": 4897,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-07",
+      "candidates": 4900,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-08",
+      "candidates": 4901,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-11",
+      "candidates": 4900,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-12",
+      "candidates": 4901,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-13",
+      "candidates": 4910,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-14",
+      "candidates": 4911,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-15",
+      "candidates": 4913,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-18",
+      "candidates": 4917,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-19",
+      "candidates": 4917,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-20",
+      "candidates": 4922,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-21",
+      "candidates": 4924,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-22",
+      "candidates": 4923,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-25",
+      "candidates": 4925,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-26",
+      "candidates": 4926,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-27",
+      "candidates": 4926,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-28",
+      "candidates": 4924,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-05-29",
+      "candidates": 4923,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-01",
+      "candidates": 4922,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-02",
+      "candidates": 4924,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-03",
+      "candidates": 4926,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-04",
+      "candidates": 4926,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-05",
+      "candidates": 4929,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-08",
+      "candidates": 4927,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-09",
+      "candidates": 4926,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-10",
+      "candidates": 4924,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-11",
+      "candidates": 4924,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-12",
+      "candidates": 4926,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-15",
+      "candidates": 4926,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-16",
+      "candidates": 4929,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-17",
+      "candidates": 4926,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-18",
+      "candidates": 4925,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-22",
+      "candidates": 4930,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-23",
+      "candidates": 4933,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-24",
+      "candidates": 4933,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-25",
+      "candidates": 4934,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-26",
+      "candidates": 4933,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-29",
+      "candidates": 4932,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-06-30",
+      "candidates": 4928,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-01",
+      "candidates": 4931,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-02",
+      "candidates": 4934,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-03",
+      "candidates": 4937,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-06",
+      "candidates": 4941,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-07",
+      "candidates": 4936,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-08",
+      "candidates": 4935,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-09",
+      "candidates": 4934,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-10",
+      "candidates": 4934,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-13",
+      "candidates": 4938,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-14",
+      "candidates": 4942,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-15",
+      "candidates": 4942,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-16",
+      "candidates": 4938,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-17",
+      "candidates": 4945,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-20",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-21",
+      "candidates": 4950,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-22",
+      "candidates": 4948,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-23",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-24",
+      "candidates": 4943,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-27",
+      "candidates": 4934,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-28",
+      "candidates": 4935,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-29",
+      "candidates": 4937,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-30",
+      "candidates": 4937,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-07-31",
+      "candidates": 4934,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-03",
+      "candidates": 4936,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-04",
+      "candidates": 4936,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-05",
+      "candidates": 4942,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-06",
+      "candidates": 4940,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-07",
+      "candidates": 4944,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-10",
+      "candidates": 4949,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-11",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-12",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-13",
+      "candidates": 4947,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-14",
+      "candidates": 4944,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-17",
+      "candidates": 4933,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-18",
+      "candidates": 4928,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-19",
+      "candidates": 4929,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-20",
+      "candidates": 4932,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-21",
+      "candidates": 4933,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-24",
+      "candidates": 4937,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-25",
+      "candidates": 4938,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-26",
+      "candidates": 4944,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-27",
+      "candidates": 4946,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-28",
+      "candidates": 4948,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-08-31",
+      "candidates": 4948,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-01",
+      "candidates": 4952,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-02",
+      "candidates": 4949,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-03",
+      "candidates": 4949,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-04",
+      "candidates": 4944,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-07",
+      "candidates": 4938,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-08",
+      "candidates": 4939,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-09",
+      "candidates": 4939,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-10",
+      "candidates": 4935,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-11",
+      "candidates": 4937,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-14",
+      "candidates": 4936,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-15",
+      "candidates": 4932,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-16",
+      "candidates": 4930,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-17",
+      "candidates": 4929,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-18",
+      "candidates": 4931,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-21",
+      "candidates": 4936,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-22",
+      "candidates": 4935,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-23",
+      "candidates": 4935,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-24",
+      "candidates": 4930,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-28",
+      "candidates": 4934,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-29",
+      "candidates": 4929,
+      "top100_equal": true
+    },
+    {
+      "date": "2026-09-30",
+      "candidates": 4920,
+      "top100_equal": true
+    }
+  ]
+}

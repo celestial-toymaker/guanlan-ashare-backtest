@@ -2,123 +2,123 @@
   "passed": true,
   "format": "png",
   "renderer": "Matplotlib Agg",
-  "financial_files_checked": 297,
+  "series_per_report": 1,
+  "historical_financial_files_checked": 210,
   "render_cases": [
-    "逐日原始净值",
-    "按日期对齐参考组合",
-    "单曲线",
+    "全部逐日原始净值",
+    "单策略累计收益",
     "零交易的平坦净值"
   ],
   "reports": [
     {
       "run_id": "full-bollinger",
-      "chart_sha256": "829043c5ede22d4e41c80e5d4a2bb6ed86e7d79b8780d550cca26a1aec01fced",
+      "chart_sha256": "411074d20544b2bfd92c27e5f08156b28f8f877789acf96b550e359391a31e59",
       "size": [
         1880,
         580
       ],
       "daily_points": 424,
-      "financial_files_unchanged": true
+      "series": 1
     },
     {
       "run_id": "full-breakout",
-      "chart_sha256": "c112bcc861c971201cc62e7c737dfd150c0cc80c91bd5a2ae921fd4dc0e3e0ce",
+      "chart_sha256": "9b0031c538490cb09db0e2dfbd4f800cf5fdf6a6547345e57cfb567c37092a85",
       "size": [
         1880,
         580
       ],
       "daily_points": 424,
-      "financial_files_unchanged": true
+      "series": 1
     },
     {
       "run_id": "full-buy-hold",
-      "chart_sha256": "d755bc2e35cb84a7679397bbdc8d5071cd035253d947c169989502a38e92706c",
+      "chart_sha256": "051a4ad243bb6c64e01e828e94971630a2b92cccd6cec5a5f8197d425c047899",
       "size": [
         1880,
         580
       ],
       "daily_points": 424,
-      "financial_files_unchanged": true
+      "series": 1
     },
     {
       "run_id": "full-liquidity",
-      "chart_sha256": "b2117e85dc6cdc9542ba2b1239905aad1f15111ccbd43d26fdf06a9bd7b8b113",
+      "chart_sha256": "5b37cda7962e27926efaf6a5332649b62d0c4700e7a72052e63f5194c7bd9606",
       "size": [
         1880,
         580
       ],
       "daily_points": 424,
-      "financial_files_unchanged": true
+      "series": 1
     },
     {
       "run_id": "full-low-volatility",
-      "chart_sha256": "d5f61c62f4f773812d1c115cdb3052147cbe96d89cfc1a48c4584a2167df272c",
+      "chart_sha256": "202915072baab1c9e560d7b92260c0a18a931ffa0b949777320cfde26ec4f3b4",
       "size": [
         1880,
         580
       ],
       "daily_points": 424,
-      "financial_files_unchanged": true
+      "series": 1
     },
     {
       "run_id": "full-momentum",
-      "chart_sha256": "7296335087a154c82f5be52067002718b4c9d0707d69f3c96d94861a005039d0",
+      "chart_sha256": "6dce357ab34417772ac8e90b83e612fc6afb4d5a2da1712aff7472cb04b4a34b",
       "size": [
         1880,
         580
       ],
       "daily_points": 424,
-      "financial_files_unchanged": true
+      "series": 1
     },
     {
       "run_id": "full-moving-average",
-      "chart_sha256": "3d3404f384fb7c6ca624dbcfec1afb72c021a267ca6b4e1ddad96485f33cf66f",
+      "chart_sha256": "7c38f6035ccf9f84f96722b12e8d30b8eb2735fb77cc776bbc724aba0efdd1b2",
       "size": [
         1880,
         580
       ],
       "daily_points": 424,
-      "financial_files_unchanged": true
+      "series": 1
     },
     {
       "run_id": "full-multifactor",
-      "chart_sha256": "f51754e1f62649367d0f421b6636f9d8e81eaffd702af4db2de77f388dc84c62",
+      "chart_sha256": "13a3096c0749c376156bccd42dd93b05bc475661d708b19d325cfa0f04b0f107",
       "size": [
         1880,
         580
       ],
       "daily_points": 424,
-      "financial_files_unchanged": true
+      "series": 1
     },
     {
       "run_id": "full-reversal",
-      "chart_sha256": "0bee37165c44fd7133b8ed1303e63c4dc20b4251c780f91f26a7c6ba9451be4d",
+      "chart_sha256": "c51330c506450c965e8e531f84b6e3a38733d7e93f58ad5664ba8fcf9fe723b0",
       "size": [
         1880,
         580
       ],
       "daily_points": 424,
-      "financial_files_unchanged": true
+      "series": 1
     },
     {
       "run_id": "full-rsi",
-      "chart_sha256": "34fc63e5a08e3092db5e72d76ad53add42f0adb8ccfaaaf5c77ab653a59c1cad",
+      "chart_sha256": "b1e8c8ec0959e70b385581785cdc0ad5d4ed9a9ffe9fa491d097843f65ad2f9d",
       "size": [
         1880,
         580
       ],
       "daily_points": 424,
-      "financial_files_unchanged": true
+      "series": 1
     },
     {
-      "run_id": "report-5dr",
-      "chart_sha256": "0bee37165c44fd7133b8ed1303e63c4dc20b4251c780f91f26a7c6ba9451be4d",
+      "run_id": "report-5dr-100",
+      "chart_sha256": "835aa0bb7072cf7317ea9583b42486dd266de3a675809bb8305f212f358f9cc8",
       "size": [
         1880,
         580
       ],
       "daily_points": 424,
-      "financial_files_unchanged": true
+      "series": 1
     }
   ]
 }

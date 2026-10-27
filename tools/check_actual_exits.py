@@ -16,7 +16,7 @@ def check():
     paths=0
     reports=[]
     for directory in sorted((ROOT/'runs').iterdir()):
-        if not (directory.name.startswith('full-') or directory.name=='report-5dr'):
+        if not (directory.name.startswith('full-') or directory.name=='report-5dr-100'):
             continue
         summary=json.loads((directory/'summary.json').read_text())
         assert summary['exit_planning']['uses_future_market_data']

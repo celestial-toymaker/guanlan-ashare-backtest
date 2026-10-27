@@ -75,3 +75,23 @@ test('任务持久化和取消', async ({request}) => {
   const records=await request.get('/api/runs');
   expect((await records.json()).find((r:any)=>r.id===job.id).status).toBe('cancelled');
 });
+
+test('100只5DR的单策略曲线、报告与全市场目标', async ({page}) => {
+  const requested:string[]=[];
+  page.on('request',request=>requested.push(request.url()));
+  await page.setViewportSize({width:1440,height:1060});
+  await page.goto('/?run=report-5dr-100');
+  await expect(page.getByText('退出采用事后规划口径。',{exact:true})).toBeVisible();
+  await expect(page.locator('.curve-panel .chart-legend span')).toHaveCount(1);
+  await expect(page.locator('.metric-sub').filter({hasText:'最多 100 只'})).toBeVisible();
+  await expect(page.locator('body')).not.toContainText('参考组合');
+  await expect(page.getByRole('link',{name:'Markdown 报告'})).toHaveAttribute('href','/api/runs/report-5dr-100/file/report.md');
+  const report=await page.request.get('/api/runs/report-5dr-100/file/report.md');
+  expect(await report.text()).toContain('**100 只**');
+  expect(await report.text()).not.toContain('参考组合');
+  await page.getByRole('button',{name:'全市场选股',exact:true}).click();
+  await page.getByRole('button',{name:'策略目标',exact:true}).click();
+  await expect(page.locator('tbody tr')).toHaveCount(100);
+  await expect(page.locator('tbody tr').first()).toContainText('0.95%');
+  expect(requested.filter(url=>url.includes('benchmark'))).toEqual([]);
+});

@@ -19,12 +19,12 @@ ROOT_FILES = (
     'web/tsconfig.json', 'web/vite.config.ts', 'web/playwright.config.ts',
 )
 DATA_PROOFS = (
-    'acceptance.json', 'png-report-check.json', 'actual-exit-check.json', 'full-acceptance.json', '5dr-report-check.json', 'profile.json',
+    'acceptance.json', 'png-report-check.json', 'actual-exit-check.json', 'full-acceptance.json', '5dr-report-check.json', '5dr100-ranking-check.json', 'report-refresh-check.json', 'main-strategy-preservation.json', 'profile.json',
     'audit.json', 'mps_validation.json', 'formal-status-coverage.json', 'status/coverage.json',
 )
-REPORT_FILES = ('report.md', 'equity-curve.png', 'summary.json', 'config.json', 'manifest.json', 'equity.csv', 'benchmark_equity.csv')
+REPORT_FILES = ('report.md', 'equity-curve.png', 'summary.json', 'config.json', 'manifest.json', 'equity.csv')
 VALIDATION_FILES = (
-    'python-tests.xml', 'browser-tests.json', 'full-replay-check.json', 'lifecycle-check.json',
+    'python-tests.xml', 'browser-tests.json', 'full-replay-check.json', '5dr100-replay-check.json', 'lifecycle-check.json',
     'lifecycle-browser.json', '5dr-browser-check.json',
     'publication-python-tests.xml', 'publication-staged-tests.xml', 'publication-frontend-build.log',
 )
@@ -44,19 +44,17 @@ def approved_file(path):
 
 
 def prepare():
-    source = ROOT / 'runs/report-5dr'
+    source = ROOT / 'runs/report-5dr-100'
     previous_path=ROOT/'reports/5dr/manifest.json'
     if previous_path.exists():
         old_chart=json.loads(previous_path.read_text()).get('report',{}).get('chart')
         if old_chart and old_chart!='equity-curve.png' and Path(old_chart).name==old_chart:
             (previous_path.parent/old_chart).unlink(missing_ok=True)
+    for old in (ROOT/'reports/5dr').glob('benchmark_*'):
+        old.unlink()
     for name in REPORT_FILES:
         if (source / name).exists():
             copy_file(source / name, ROOT / 'reports/5dr' / name)
-    if (source / 'benchmark_equity.parquet').exists():
-        import pandas as pd
-        pd.read_parquet(source / 'benchmark_equity.parquet').to_csv(
-            ROOT / 'reports/5dr/benchmark_equity.csv', index=False, encoding='utf-8-sig')
     for name in ('5dr-workbench.png', '5dr-report.png'):
         path = ROOT / 'work/screenshots' / name
         if path.exists():

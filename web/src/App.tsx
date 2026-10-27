@@ -43,7 +43,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Line,
   ComposedChart,
   ReferenceLine,
 } from "recharts";
@@ -338,15 +337,10 @@ export default function App() {
   const equityData = useRemote(
     summary ? `/runs/${activeId}/table/equity?limit=3000` : null,
   );
-  const benchmarkData = useRemote(
-    summary ? `/runs/${activeId}/table/benchmark_equity?limit=3000` : null,
-  );
   const chart = (equityData.data?.rows || []).map(
-    (row: Row, index: number) => ({
+    (row: Row) => ({
       ...row,
       return: (Number(row.unit_nav) - 1) * 100,
-      benchmark:
-        (Number(benchmarkData.data?.rows?.[index]?.unit_nav || 1) - 1) * 100,
       exposure: Number(row.exposure) * 100,
     }),
   );
@@ -642,8 +636,8 @@ export default function App() {
                   </button>
                 </div>
               )}
-              {(equityData.error || benchmarkData.error) && (
-                <Alert>{equityData.error || benchmarkData.error}</Alert>
+              {equityData.error && (
+                <Alert>{equityData.error}</Alert>
               )}
               <div className="metric-grid">
                 <Metric
@@ -675,7 +669,7 @@ export default function App() {
                   value={summary ? pct(summary.return) : "—"}
                   sub={
                     summary
-                      ? `参考组合 ${pct(summary.benchmark_return)}`
+                      ? `已扣除交易成本 · 最多 ${summary.config.max_positions} 只`
                       : "运行后显示实际收益"
                   }
                   accent={
@@ -713,10 +707,6 @@ export default function App() {
                         <span>
                           <i />
                           策略
-                        </span>
-                        <span>
-                          <i />
-                          参考组合
                         </span>
                       </div>
                     }
@@ -772,7 +762,7 @@ export default function App() {
                   <div className="chart-footer">
                     <span>
                       <Info size={14} />
-                      参考组合：首次动量选股篮子，随后持有，费用与退出规则相同。
+                      曲线按逐日净值展示，点击日期可查看当天交易。
                     </span>
                     {summary && (
                       <a
@@ -1158,7 +1148,7 @@ function EquityChart({
             }}
             formatter={(v: any, name: any) => [
               `${Number(v).toFixed(2)}%`,
-              name === "return" ? "策略收益" : "参考组合",
+              "策略收益",
             ]}
           />
           <ReferenceLine y={0} stroke="#dbe1ed" />
@@ -1168,16 +1158,6 @@ function EquityChart({
             stroke="#4169e8"
             strokeWidth={2.3}
             fill="url(#equityFill)"
-            animationDuration={350}
-            isAnimationActive={false}
-          />
-          <Line
-            type="monotone"
-            dataKey="benchmark"
-            stroke="#a4b0c5"
-            dot={false}
-            strokeDasharray="4 4"
-            strokeWidth={1.5}
             animationDuration={350}
             isAnimationActive={false}
           />

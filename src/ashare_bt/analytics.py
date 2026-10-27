@@ -11,7 +11,7 @@ from .config import EXIT_MODES
 from .utils import atomic_json, dec, dumps, sha256
 
 
-def summarize(config, tables, coverage, device, reference, extra):
+def summarize(config, tables, coverage, device, extra):
     equity, trades, orders = tables["equity"], tables["trades"], tables["orders"]
     units = equity.unit_nav.to_numpy(float)
     curve = np.r_[1., units]
@@ -70,13 +70,10 @@ def summarize(config, tables, coverage, device, reference, extra):
                                "net_profit": "终点净资产减初始资金和净入金", "exposure": "股票市值除以净资产；待结算权益单列",
                                "capacity_constrained_notional": "因共享容量到期的委托余量按该次开盘价折算，跨日累计并包含重复尝试，买卖双向合计"},
     }
-    if reference is not None:
-        summary["benchmark_return"] = float(reference.unit_nav.iloc[-1] - 1)
-        summary["benchmark_ending_nav"] = str(reference.nav.iloc[-1])
     return summary
 
 
-def chart_png(directory, equity, reference=None):
+def chart_png(directory, equity):
     """以已保存的逐日净值绘制 PNG；中文说明与 Markdown 报告配套。"""
     from pathlib import Path
     from matplotlib.backends.backend_agg import FigureCanvasAgg
@@ -89,9 +86,6 @@ def chart_png(directory, equity, reference=None):
         raise ValueError("资金曲线需要至少一个净值日期")
     dates = np.array(equity.date, dtype="datetime64[D]")
     values = (equity.unit_nav.to_numpy(float) - 1) * 100
-    reference_values = None
-    if reference is not None:
-        reference_values = (reference.set_index("date").unit_nav.reindex(equity.date).to_numpy(float) - 1) * 100
     figure = Figure(figsize=(11.75, 3.625), dpi=160, facecolor="white")
     canvas = FigureCanvasAgg(figure)
     axis = figure.add_subplot(111)
@@ -107,11 +101,7 @@ def chart_png(directory, equity, reference=None):
                 font = FontProperties(family=family, size=9)
                 break
     axis.plot(dates, values, color="#315ee8", linewidth=1.8, label="策略" if font else "Strategy")
-    if reference_values is not None:
-        axis.plot(dates, reference_values, color="#98a6c0", linewidth=1.3,
-                  linestyle=(0, (4, 3)), label="参考组合" if font else "Reference")
-    finite = np.r_[0., values[np.isfinite(values)],
-                   reference_values[np.isfinite(reference_values)] if reference_values is not None else []]
+    finite = np.r_[0., values[np.isfinite(values)]]
     lower, upper = float(finite.min()), float(finite.max())
     padding = max((upper - lower) * .12, .5)
     axis.set_ylim(lower - padding, upper + padding)
@@ -131,7 +121,7 @@ def chart_png(directory, equity, reference=None):
     axis.tick_params(axis="both", labelsize=8, colors="#77849c", length=0, pad=8)
     for spine in axis.spines.values():
         spine.set_visible(False)
-    axis.legend(loc="upper left", frameon=False, prop=font or FontProperties(size=9), ncol=2)
+    axis.legend(loc="upper left", frameon=False, prop=font or FontProperties(size=9), ncol=1)
     figure.subplots_adjust(left=.07, right=.985, bottom=.15, top=.92)
     path = Path(directory) / "equity-curve.png"
     try:
@@ -141,7 +131,7 @@ def chart_png(directory, equity, reference=None):
     return path
 
 
-def write_report(directory, summary, equity, reference=None):
+def write_report(directory, summary, equity):
     s = summary
     yuan = lambda value: f"{dec(value):,.2f} 元"
     costs = []
@@ -162,6 +152,8 @@ def write_report(directory, summary, equity, reference=None):
 {s['start']} 至 {s['end']}，共 **{s['trading_days']} 个交易日**。初始资金 **{yuan(s['initial_cash'])}**。
 
 ## 1. 先看账户赚亏
+
+策略持仓上限为 **{s["config"]["max_positions"]} 只**，每 {s["config"]["rebalance_days"]} 个交易日调仓，目标仓位 **{s["target_exposure"]:.0%}**。实际建仓由资格、资金和成交规则决定。
 
 | 观察项目 | 实际结果 |
 |---|---:|
@@ -186,9 +178,9 @@ def write_report(directory, summary, equity, reference=None):
 
 ## 3. 资金曲线
 
-![策略与参考组合的累计收益曲线](equity-curve.png)
+![策略累计收益曲线](equity-curve.png)
 
-蓝线表示本次策略，灰色虚线表示首次动量篮子买入持有的参考组合；两者使用相同初始资金、费用和退出方式。收益曲线按份额计量，入出金另行记录。聚合曲线见 [账户净值 CSV](equity.csv) 与 [参考净值 CSV](benchmark_equity.csv)。
+蓝线表示本次策略扣除已计交易成本后的累计收益。收益曲线按份额计量，入出金另行记录。聚合曲线见 [账户净值 CSV](equity.csv)。
 
 ## 4. 期末资金与执行结果
 
@@ -247,13 +239,8 @@ def write_report(directory, summary, equity, reference=None):
             rows.append(f"| {record['security']} | {record['type']} | {record['quantity']} | {record['price']} | {yuan(record['gross'])} | {yuan(record['fees'])} | {record['basis']} |")
         detail = '\n\n### 终点假设清算明细\n\n| 证券 | 类型 | 数量 | 估值价格 | 变现金额 | 费用 | 假设依据 |\n|---|---|---:|---:|---:|---:|---|\n' + '\n'.join(rows)
         text = text.replace('\n\n## 3.', detail + '\n\n## 3.', 1)
-    if reference is not None:
-        reference.to_csv(directory / 'benchmark_equity.csv', index=False, encoding='utf-8-sig')
-    else:
-        text = text.replace(' 与 [参考净值 CSV](benchmark_equity.csv)', '')
-        text = text.replace('蓝线表示本次策略，灰色虚线表示首次动量篮子买入持有的参考组合；两者使用相同初始资金、费用和退出方式。', '蓝线表示本次策略。')
     (directory / 'report.md').write_text(text, encoding='utf-8')
-    image_path = chart_png(directory, equity, reference)
+    image_path = chart_png(directory, equity)
     packages = {}
     for name in ("numpy","pandas","pyarrow","torch","fastapi","baostock","matplotlib"):
         packages[name] = version(name)

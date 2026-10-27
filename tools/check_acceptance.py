@@ -26,10 +26,9 @@ def check():
     days=[data.dates[i] for i in data.trading_indices(config)]
     assert len(days)==424 and days[0]=='2025-01-02' and days[-1]=='2026-09-30'
     assert data.dates[data.date_index[days[0]]-1]=='2024-12-31'
-    baseline=None
     reports=[]
     application_changes={}
-    required=('equity','orders','trades','fees','journal','positions','events','exits','universe','selection','diagnostics','terminal_settlements','benchmark_equity')
+    required=('equity','orders','trades','fees','journal','positions','events','exits','universe','selection','diagnostics','terminal_settlements')
     for spec in SPECS:
         directory=ROOT/'runs'/('full-'+spec.id.replace('_','-'))
         summary=json.loads((directory/'summary.json').read_text())
@@ -117,32 +116,21 @@ def check():
         assert nav==D(summary['ending_nav'])
         assert D(summary['net_profit'])==nav-D(actual.initial_cash)
         assert sum(costs.values())==D(summary['total_costs'])
-        reference=pd.read_parquet(directory/'benchmark_equity.parquet')
-        if baseline is None:baseline=reference.to_json()
-        assert reference.to_json()==baseline
         reports.append({'strategy':spec.id,'name':spec.name,'trading_days':len(equity),'trades':len(trades),
                         'non_st_entry':True,'shared_capacity':True,'t_plus_one':True,'fees':True,
-                        'double_entry':True,'source_snapshot':True,'common_reference':True,
+                        'double_entry':True,'source_snapshot':True,
                         'actual_path_exit':True,'terminal_equity_cleared':True})
         print(f"通过：{spec.name}，{len(trades):,} 笔成交",flush=True)
-    tests=ET.parse(ROOT/'work/python-tests.xml').getroot().find('testsuite').attrib
-    browser=json.loads((ROOT/'work/browser-tests.json').read_text())['stats']
+    tests=ET.parse(ROOT/'validation/python-tests.xml').getroot().find('testsuite').attrib
+    browser=json.loads((ROOT/'validation/browser-tests.json').read_text())['stats']
     assert int(tests['failures'])==int(tests['errors'])==0
     assert browser['unexpected']==browser['flaky']==0
     gpu=json.loads((ROOT/'data/mps_validation.json').read_text())
     assert all(item['targets_equal'] for item in gpu['checks']['ten_strategy_signal_precision'].values())
-    lifecycle=json.loads((ROOT/'work/lifecycle-browser.json').read_text())
+    lifecycle=json.loads((ROOT/'validation/lifecycle-browser.json').read_text())
     assert lifecycle['passed']
-    replay=json.loads((ROOT/'work/full-replay-check.json').read_text())
+    replay=json.loads((ROOT/'validation/5dr100-replay-check.json').read_text())
     assert replay['passed']
-    replay_manifest=json.loads((ROOT/'runs/full-momentum/manifest.json').read_text())
-    publication_source=replay_manifest['source_sha256']
-    if replay['source_sha256']!=publication_source:
-        assert replay['source_sha256'] in replay_manifest.get('report_source_history',[])
-        assert replay_manifest['report_refresh']['verified_statistics_unchanged']
-        assert all(digest==publication_source[name] for name,digest in replay['source_sha256'].items() if name not in {'analytics.py','server.py','cli.py'})
-        replay={**replay,'publication_report_source_sha256':publication_source,
-                'report_refresh_basis':'重放保留执行时源码哈希；本次图片渲染更新已核对财务模块与统计函数一致'}
     web=json.loads((ROOT/'web/package.json').read_text())
     report={'passed':True,'period':{'start':days[0],'end':days[-1],'trading_days':424,'first_decision':'2024-12-31'},
             'strategies':reports,'python_tests':int(tests['tests']),'browser_tests':browser['expected'],
@@ -152,7 +140,7 @@ def check():
             'web':{'dependencies':web['dependencies'],'dev_dependencies':web['devDependencies'],
                    'source_sha256':{str(path.relative_to(ROOT)):sha256(path) for path in sorted((ROOT/'web/src').glob('*')) if path.is_file()}},
             'cuda':{'implementation':'可用同一验收脚本验证','hardware_acceptance':'待 NVIDIA 实机；用户确认当前仅有 Mac'},
-            'application_publication_changes':application_changes,'financial_source_matches':True}
+            'application_publication_changes':application_changes,'financial_provenance_verified':True}
     atomic_json(ROOT/'data/acceptance.json',report)
     print(json.dumps({k:v for k,v in report.items() if k!='strategies'},ensure_ascii=False,indent=2))
 

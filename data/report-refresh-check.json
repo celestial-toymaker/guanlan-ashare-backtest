@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "runs": [
+    {
+      "run_id": "full-bollinger",
+      "financial_files_checked": 21,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-breakout",
+      "financial_files_checked": 21,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-buy-hold",
+      "financial_files_checked": 21,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-liquidity",
+      "financial_files_checked": 21,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-low-volatility",
+      "financial_files_checked": 21,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-momentum",
+      "financial_files_checked": 21,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-moving-average",
+      "financial_files_checked": 21,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-multifactor",
+      "financial_files_checked": 21,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-reversal",
+      "financial_files_checked": 21,
+      "financial_files_unchanged": true
+    },
+    {
+      "run_id": "full-rsi",
+      "financial_files_checked": 21,
+      "financial_files_unchanged": true
+    }
+  ]
+}

@@ -29,6 +29,14 @@ def records(frame):
     return json.loads(frame.replace([np.inf,-np.inf],np.nan).to_json(orient="records",date_format="iso",force_ascii=False))
 
 
+def current_summary(summary):
+    """历史运行沿用其主策略结果，公开配置采用当前格式。"""
+    result = {key:value for key,value in summary.items() if not key.startswith("benchmark_")}
+    result["config"] = Config.from_dict(result["config"]).public()
+    result["schema_version"] = 2
+    return result
+
+
 class JobQueue:
     def __init__(self,root):
         self.root = root
@@ -43,10 +51,14 @@ class JobQueue:
         result = [read_json(path) for path in self.directory.glob("*.json")]
         known = {item["id"] for item in result}
         for path in (self.root / "runs").glob("*/summary.json"):
-            summary = read_json(path)
+            summary = current_summary(read_json(path))
             if summary["run_id"] not in known:
                 result.append({"id":summary["run_id"],"status":"completed","progress":1,"message":"回测已完成",
                                "created_at":summary["created_at"],"config":summary["config"],"summary":summary})
+        for job in result:
+            job["config"] = Config.from_dict(job["config"], self.root).public()
+            if job.get("summary"):
+                job["summary"] = current_summary(job["summary"])
         return sorted(result,key=lambda item:item.get("created_at",""),reverse=True)
 
     def add(self,config):
@@ -165,7 +177,7 @@ def create_app(root=ROOT):
     @app.get("/api/runs/{ident}/table/{name}")
     def table(ident:str,name:str,date:str|None=None,security:str|None=None,side:str|None=None,query:str|None=None,
               eligible:bool|None=None,selected:bool|None=None,offset:int=0,limit:int=100):
-        allowed = {"equity","benchmark_equity","trades","orders","positions","journal","fees","events","exits","universe",
+        allowed = {"equity","trades","orders","positions","journal","fees","events","exits","universe",
                    "selection","order_events","terminal_settlements","diagnostics"}
         if name not in allowed:
             raise HTTPException(404,"请选择已保存的结果表")
@@ -197,6 +209,8 @@ def create_app(root=ROOT):
     @app.get("/api/runs/{ident}/file/{filename}")
     def file(ident:str,filename:str):
         path = contained(run_path(ident),filename)
+        if filename.startswith("benchmark_"):
+            raise HTTPException(404,"请选择已保存的策略结果文件")
         if path.suffix not in {".md",".png",".csv",".parquet",".json",".jsonl"} or not path.exists():
             raise HTTPException(404,"文件将在运行完成后提供")
         return FileResponse(path)

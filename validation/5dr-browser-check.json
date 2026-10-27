@@ -1,18 +1,18 @@
 {
   "passed": true,
-  "run_id": "report-5dr",
+  "run_id": "report-5dr-100",
+  "max_positions": 100,
+  "series": 1,
   "report_format": "markdown",
   "ui_metrics": [
-    "-4,682.10 万元",
-    "-4.68%",
-    "10.27%",
-    "8.40%"
+    "-9,592.16 万元",
+    "-9.59%",
+    "27.67%",
+    "29.52%"
   ],
-  "navigation_pages": 6,
   "page_errors": [],
   "screenshots": [
-    "work/screenshots/5dr-workbench.png",
-    "work/screenshots/5dr-report.png"
-  ],
-  "future_data_scope": "退出倒排与新增买入退出可行性校验"
+    "docs/images/5dr-workbench.png",
+    "docs/images/5dr-report.png"
+  ]
 }

@@ -295,18 +295,6 @@ class BuiltinStrategy(Strategy):
         return weights
 
 
-class FixedBasketStrategy(Strategy):
-    def __init__(self, weights):
-        self.weights = weights
-        self.called = False
-
-    def on_close(self, history, portfolio):
-        if self.called:
-            return TargetWeights({}, "参考组合持有首期篮子", False)
-        self.called = True
-        return TargetWeights(self.weights, "参考组合首期建仓")
-
-
 class StrategyRegistry:
     def __init__(self):
         self.specs = {spec.id: spec for spec in SPECS}

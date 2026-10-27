@@ -45,7 +45,6 @@ class Config:
     strict_status: bool = True
     events_file: str | None = None
     status_file: str | None = None
-    benchmark: bool = True
     parameters: dict = field(default_factory=dict)
 
     def __post_init__(self):
@@ -90,6 +89,8 @@ class Config:
 
     @classmethod
     def from_dict(cls, values: dict, root: Path | None = None):
+        values = dict(values)
+        values.pop("benchmark", None)  # 兼容历史运行保存的配置。
         allowed = {f.name for f in fields(cls)}
         unknown = set(values) - allowed
         if unknown:

@@ -7,7 +7,6 @@ from pathlib import Path
 from types import SimpleNamespace
 import json
 import time
-import os
 
 import numpy as np
 import pandas as pd
@@ -22,7 +21,7 @@ from .execution import Broker, ExitPlanner
 from .ledger import Ledger, ZERO
 from .rules import RULE_SOURCES, quantity_rule
 from .status import ensure_status
-from .strategies import FixedBasketStrategy, StrategyRegistry, TargetWeights, stable_rank
+from .strategies import StrategyRegistry, TargetWeights, stable_rank
 from .utils import atomic_json, check_cancel, dec, dumps, fingerprint, money, sha256
 
 FILTER_REASONS = {0: "合格候选", 1: "证券类型", 2: "行情待观测或异常", 3: "有效历史不足", 4: "ST 状态待核实",
@@ -42,7 +41,6 @@ class BacktestResult:
     fees: pd.DataFrame
     summary: dict
     run_dir: Path | None = None
-    benchmark: pd.DataFrame | None = None
     selection: pd.DataFrame | None = None
 
 
@@ -396,44 +394,11 @@ def run(config: Config | dict | None = None, strategy=None, *, progress=lambda *
                 handle.write(dumps(event.as_dict()) + "\n")
     tables, extra = _simulate(config, strategy, data, features, status, source, progress, cancel_file,
                               run_dir / "selection.parquet" if run_dir else None, collect_selection, event_handlers)
-    reference = None
-    if config.benchmark:
-        check_cancel(cancel_file)
-        reference_config = Config.from_dict({**config.public(), "strategy": "momentum", "parameters": {"window": 20, "allocation": "equal"}}, config.root)
-        initial = data.date_index[config.start] - 1
-        eligible, reasons = eligibility(data, features, status, reference_config, initial)
-        probe = StrategyRegistry().create(reference_config)
-        first_target = probe.on_close(History(data, features, status, initial, eligible, reasons), Ledger(config.initial_cash).portfolio())
-        benchmark_strategy = FixedBasketStrategy(first_target.weights)
-        reference_config.name = "首期动量篮子参考组合"
-        reference_key = fingerprint({"config":reference_config.public(),"data":data.fingerprint,"status":status.fingerprint,
-                                     "events":[event.as_dict() for event in source.events],
-                                     "code":{p.name:sha256(p) for p in Path(__file__).parent.glob("*.py")}})
-        cache_dir = config.root / "data" / "benchmark" / reference_key
-        cache_ready = cache_dir / "ready.json"
-        progress(stage="benchmark", done=0, total=len(tables["equity"]), message="计算相同费用与退出规则的参考组合")
-        if cache_ready.exists() and not event_handlers:
-            reference_tables = {name:pd.read_parquet(cache_dir/f"{name}.parquet") for name in ("equity","trades","fees","orders")}
-        else:
-            reference_tables, reference_extra = _simulate(reference_config, benchmark_strategy, data, features, status,
-                                                          EventSource(source.events), lambda **kw: None, cancel_file, event_handlers=event_handlers)
-            if not event_handlers:
-                cache_dir.mkdir(parents=True, exist_ok=True)
-                for name in ("equity","trades","fees","orders"):
-                    target = cache_dir / f"{name}.parquet"
-                    temporary = target.with_name(target.name+f".{os.getpid()}.tmp")
-                    reference_tables[name].to_parquet(temporary,index=False)
-                    temporary.replace(target)
-                atomic_json(cache_ready,{"key":reference_key})
-        reference = reference_tables["equity"]
-        if run_dir:
-            for name in ("equity", "trades", "fees", "orders"):
-                reference_tables[name].to_parquet(run_dir / f"benchmark_{name}.parquet", index=False)
     from .analytics import summarize, write_report
-    summary = summarize(config, tables, coverage, features.metadata, reference, extra)
+    summary = summarize(config, tables, coverage, features.metadata, extra)
     summary.update({"run_id": run_id, "input_fingerprint": data.fingerprint, "status_fingerprint": status.fingerprint,
                     "config": config.public(), "rule_sources": RULE_SOURCES,
-                    "filter_reasons": FILTER_REASONS, "schema_version": 1})
+                    "filter_reasons": FILTER_REASONS, "schema_version": 2})
     if run_dir:
         progress(stage="report", done=0, total=1, message="生成中文报告与可追溯明细")
         for name, table in {**tables, "universe": extra["universe"], "order_events": extra["order_events"],
@@ -448,6 +413,6 @@ def run(config: Config | dict | None = None, strategy=None, *, progress=lambda *
             for record in tables["events"].to_dict("records"):
                 handle.write(dumps({**record, "payload": json.loads(record["payload"])}) + "\n")
         atomic_json(run_dir / "summary.json", summary)
-        write_report(run_dir, summary, tables["equity"], reference)
+        write_report(run_dir, summary, tables["equity"])
         progress(stage="report", done=1, total=1, message="报告已就绪")
-    return BacktestResult(config=config, **tables, summary=summary, run_dir=run_dir, benchmark=reference, selection=extra["selection"])
+    return BacktestResult(config=config, **tables, summary=summary, run_dir=run_dir, selection=extra["selection"])

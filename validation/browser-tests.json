@@ -1,7 +1,7 @@
 {
   "config": {
-    "configFile": "/Users/peter/回测/web/playwright.config.ts",
-    "rootDir": "/Users/peter/回测/web/tests",
+    "configFile": "/Users/peter/回测/work/5dr100-release/web/playwright.config.ts",
+    "rootDir": "/Users/peter/回测/work/5dr100-release/web/tests",
     "forbidOnly": false,
     "fullyParallel": false,
     "globalSetup": null,
@@ -33,7 +33,7 @@
     "quiet": false,
     "projects": [
       {
-        "outputDir": "/Users/peter/回测/web/test-results",
+        "outputDir": "/Users/peter/回测/work/5dr100-release/web/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -41,7 +41,7 @@
         },
         "id": "",
         "name": "",
-        "testDir": "/Users/peter/回测/web/tests",
+        "testDir": "/Users/peter/回测/work/5dr100-release/web/tests",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -79,12 +79,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2175,
+                  "duration": 3068,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-19T02:24:22.746Z",
+                  "startTime": "2026-10-27T07:52:05.609Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -113,12 +113,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 739,
+                  "duration": 702,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-19T02:24:25.128Z",
+                  "startTime": "2026-10-27T07:52:11.143Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -147,12 +147,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 36,
+                  "duration": 40,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-19T02:24:25.880Z",
+                  "startTime": "2026-10-27T07:52:11.850Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -164,15 +164,49 @@
           "file": "workbench.spec.ts",
           "line": 70,
           "column": 1
+        },
+        {
+          "title": "100只5DR的单策略曲线、报告与全市场目标",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 525,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:52:11.893Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "921e070f285a8b470d11-93b2eb5b19b997dd1143",
+          "file": "workbench.spec.ts",
+          "line": 79,
+          "column": 1
         }
       ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-19T02:24:22.403Z",
-    "duration": 3542.464,
-    "expected": 3,
+    "startTime": "2026-10-27T07:52:05.340Z",
+    "duration": 7106.098,
+    "expected": 4,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

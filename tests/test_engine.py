@@ -132,3 +132,39 @@ def test_actual_exit_future_access_preserves_signal_boundary(market):
     pd.testing.assert_frame_equal(before(first),before(second),check_exact=True)
     assert first.summary['exit_planning']['uses_future_market_data']
     assert first.summary['ending_positions']==second.summary['ending_positions']==0
+
+
+def test_hundred_position_reversal_refines_boundary_and_ties():
+    from types import SimpleNamespace
+    from ashare_bt.config import Config
+    from ashare_bt.strategies import StrategyRegistry
+    securities=[f'{i+1:06d}.SZ' for i in range(130)]
+    returns=np.linspace(-.2,.1,130)
+    returns[99:102]=[-.010000001,-.010000002,-.010000001]
+    prices=np.ones((6,130))*10
+    prices[-1]=10*(1+returns)
+    approximate=returns.astype(np.float32)
+    history=SimpleNamespace(securities=securities,eligible=np.ones(130,dtype=bool),date='2024-12-31',
+        factor=lambda name:approximate.copy(),prices=lambda *args,**kwargs:prices.copy())
+    config=Config(strategy='reversal',max_positions=100,parameters={'window':5})
+    target=StrategyRegistry().create(config).on_close(history,SimpleNamespace(positions={}))
+    exact=prices[-1]/prices[0]-1
+    expected=np.lexsort((np.array(securities),exact))[:100]
+    assert list(target.weights)==[securities[i] for i in expected]
+    assert len(target.weights)==100
+    assert set(target.weights.values())=={Decimal('.0095')}
+
+
+def test_current_interfaces_and_legacy_config_replay(market):
+    from ashare_bt.config import Config
+    config,data,features,status=market
+    saved={**config.public(),'benchmark':True}
+    loaded=Config.from_dict(saved,config.root)
+    assert 'benchmark' not in loaded.public()
+    result=run(loaded,data=data,features=features,status=status,run_id='current-schema')
+    assert not hasattr(result,'benchmark')
+    assert result.summary['schema_version']==2
+    assert not any(key.startswith('benchmark_') for key in result.summary)
+    assert not list(result.run_dir.glob('benchmark_*'))
+    text=(result.run_dir/'report.md').read_text()
+    assert '![策略累计收益曲线]' in text and '参考组合' not in text
